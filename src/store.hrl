@@ -17,34 +17,5 @@
 %% THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER 
 %% LIABILITY,  WHETHER IN AN ACTION OF CONTRACT,  TORT OR OTHERWISE,  ARISING 
 %%
--module(server).
--import('store').
--export([server/1]).
+-record(store, {key, value}).
 
-server(Port) ->
-    io:format("server started.~n"),
-    start(Port).
-
-%% Starting our server
-start(Port) ->
-        spawn( fun() -> {ok, Sock} = gen_tcp:listen(Port, [{active, false}]),
-                                loop(Sock) end).
-
-loop(Sock) ->
-        {ok, Conn} = gen_tcp:accept(Sock),
-        Handler = spawn(fun() -> handle (Conn) end),
-        gen_tcp:controlling_process(Conn, Handler),
-        loop(Sock).
-
-handle(Conn) ->
-        io:format('[ server ] received connection~n'),
-        % TODO: Parsing parameters
-        gen_tcp:send(Conn, response("Hallo Welt!")),
-        gen_tcp:close(Conn).
-
-response(Str) ->
-        B = iolist_to_binary(Str),
-        iolist_to_binary(
-                io_lib:fwrite(
-                        "HTTP/1.0 200 OK\nContent-Type: text/html\nContent-Length: ~p\n\n~s",
-                        [size(B), B])).
