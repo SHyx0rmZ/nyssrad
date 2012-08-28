@@ -18,8 +18,9 @@
 %% LIABILITY,  WHETHER IN AN ACTION OF CONTRACT,  TORT OR OTHERWISE,  ARISING 
 %%
 -module(main).
--export(export_all).
+-import(server).
+-export([main/0]).
 
 main() ->
-    io:format("Hallo Welt~n").
+    server:server(8888).
 
