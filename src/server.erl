@@ -21,7 +21,7 @@
 -export([server/1]).
 
 server(Port) ->
-    io:format("Hallo Welt~n"),
+    io:format("server started.~n"),
     start(Port).
 
 start(Port) ->

@@ -22,5 +22,11 @@
 -export([main/0]).
 
 main() ->
-    server:server(8888).
+        io:format('~nnyssrad - simple key-value server~n'),
+        io:format('Copyright (C) 2012 by Alexander Kluth <derhartmut@niwohlos.org>~n~n'),
+        io:format('Distributed under the terms and conditions of the MIT license.~n~n'),
+
+        io:format('Starting server...'),
+
+        server:server(8888).
 
