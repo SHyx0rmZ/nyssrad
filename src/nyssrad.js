@@ -21,4 +21,7 @@
  ******************************************************************************/
 var server = require('./server');
 
+console.log("\nnyssrad - noSQL key-value-database");
+console.log("Copyright (C) 2012 Alexander Kluth <derhartmut@niwohlos.org>");
+console.log("Distributed under the terms of the MIT license\n");
 server.start();

@@ -24,12 +24,12 @@ var Hash = require('hashish');
 var Store = { };
 
 
-function saveNewKey(key, value)
+function set(key, value)
 {
     Store[key] = value;
 }
 
-function getValue(key)
+function get(key)
 {
     if (Hash(Store).has(key)) {
         return Store[key];
@@ -38,4 +38,5 @@ function getValue(key)
     }
 }
 
-exports.getValue = getValue
+exports.set = set;
+exports.get = get;

@@ -39,7 +39,7 @@ function start()
     }
 
     http.createServer(onRequest).listen(8888);
-    console.log("nyssrad started at port 8888");
+    console.log("[ server ] Started at port 8888");
 }
 
 exports.start = start;
