@@ -14,7 +14,7 @@ then
     echo " ! node.js not found! Please install it or adjust the path in prereq.sh";
     exit
 else
-    echo " * node.js found."
+    echo " * node.js found"
 fi
 
 
@@ -51,3 +51,6 @@ else
 fi
 
 rm test.js &> /dev/null
+
+echo " "; echo " Your setup looks complete. You can now run bin/nyssrad!"
+
