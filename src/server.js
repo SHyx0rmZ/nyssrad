@@ -21,13 +21,9 @@
  ******************************************************************************/
 var http = require('http');
 var url = require('url');
-var store = require('./store');
 var router = require('./router');
+var handle = require('./handle');
 
-function onRequest(request, response)
-{
-    console.log("Yay");
-}
 
 function start()
 {
@@ -35,10 +31,10 @@ function start()
     {
         var pathname = url.parse(request.url).pathname;
 
-        router.route(pathname);
+        router.route(pathname, handle.getHandles());
 
         response.writeHead(200, {"Content-Type": "text/plain"});
-        response.write("Get");
+        response.write("Request: " + url.parse(request.url).pathname);
         response.end();
     }
 

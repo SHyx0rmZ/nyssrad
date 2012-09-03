@@ -19,12 +19,16 @@
  * FROM,  OUT OF  OR IN CONNECTION  WITH THE  SOFTWARE  OR THE  USE OR  OTHER *
  * DEALINGS IN THE SOFTWARE.                                                  *
  ******************************************************************************/
-function route(path)
+function route(path, handle)
 {
     if (path == "/favicon.ico") {
         return;
     } else {
-        console.log("Routing " + path);
+        if (typeof handle[path] === 'function') {
+            handle[path]();
+        } else {
+            console.log("No request handler found for " + path);
+        }
     }
 }
 
