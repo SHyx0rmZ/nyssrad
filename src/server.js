@@ -19,6 +19,31 @@
  * FROM,  OUT OF  OR IN CONNECTION  WITH THE  SOFTWARE  OR THE  USE OR  OTHER *
  * DEALINGS IN THE SOFTWARE.                                                  *
  ******************************************************************************/
-var server = require('./server');
+var http = require('http');
+var url = require('url');
+var store = require('./store');
+var router = require('./router');
 
-server.start();
+function onRequest(request, response)
+{
+    console.log("Yay");
+}
+
+function start()
+{
+    function onRequest(request, response)
+    {
+        var pathname = url.parse(request.url).pathname;
+
+        router.route(pathname);
+
+        response.writeHead(200, {"Content-Type": "text/plain"});
+        response.write("Get");
+        response.end();
+    }
+
+    http.createServer(onRequest).listen(8888);
+    console.log("nyssrad started at port 8888");
+}
+
+exports.start = start;

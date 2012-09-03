@@ -19,6 +19,14 @@
  * FROM,  OUT OF  OR IN CONNECTION  WITH THE  SOFTWARE  OR THE  USE OR  OTHER *
  * DEALINGS IN THE SOFTWARE.                                                  *
  ******************************************************************************/
-var server = require('./server');
+function route(path)
+{
+    if (path == "/favicon.ico") {
+        return;
+    } else {
+        console.log("Routing " + path);
+    }
+}
 
-server.start();
+exports.route = route;
+

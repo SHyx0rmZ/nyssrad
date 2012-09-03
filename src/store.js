@@ -19,6 +19,23 @@
  * FROM,  OUT OF  OR IN CONNECTION  WITH THE  SOFTWARE  OR THE  USE OR  OTHER *
  * DEALINGS IN THE SOFTWARE.                                                  *
  ******************************************************************************/
-var server = require('./server');
+var Hash = require('hashish');
 
-server.start();
+var Store = { };
+
+
+function saveNewKey(key, value)
+{
+    Store[key] = value;
+}
+
+function getValue(key)
+{
+    if (Hash(Store).has(key)) {
+        return Store[key];
+    } else {
+        return null;
+    }
+}
+
+exports.getValue = getValue
