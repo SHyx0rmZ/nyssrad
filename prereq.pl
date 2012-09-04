@@ -73,7 +73,7 @@ sub check_hashish
     print HANDLE "require('hashish');";
     close(HANDLE);
 
-    $result = `node test.js &> /dev/null`;
+    $result = `node test.js 2> /dev/null`;
 
     if (${^CHILD_ERROR_NATIVE} ne 0) {
         `rm test.js`;
@@ -87,7 +87,7 @@ sub check_hashish
 
 sub install_hashish
 {
-    `npm install hashish &> npm.install`;
+    $result = `npm install hashish 2> npm.install`;
 
     if (${^CHILD_ERROR_NATIVE} ne 0) {
         return undef;
