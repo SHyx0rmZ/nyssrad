@@ -1,5 +1,5 @@
 all:
 	@echo "Checking prerequisites..."
-	@./prereq.sh
+	@perl prereq.pl
 
 .PHONY: all
