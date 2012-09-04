@@ -46,7 +46,7 @@ sub check_prereq
 
     foreach (keys %{$prereq}) {
         print BOLD WHITE " :: " . $_ . "...\t\t\t\t";
-        $result = `$prereq->{$_} --version`;
+        $result = `$prereq->{$_} --version &> /dev/null`;
 
         if (${^CHILD_ERROR_NATIVE} ne 0) {
             print BOLD RED "not found!\n";
@@ -73,7 +73,7 @@ sub check_hashish
     print HANDLE "require('hashish');";
     close(HANDLE);
 
-    $result = `node test.js`;
+    $result = `node test.js &> /dev/null`;
 
     if (${^CHILD_ERROR_NATIVE} ne 0) {
         `rm test.js`;
