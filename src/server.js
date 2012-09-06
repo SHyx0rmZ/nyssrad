@@ -23,19 +23,19 @@ var http = require('http');
 var url = require('url');
 var router = require('./router');
 var handle = require('./handle');
-
+var response = require('./response');
 
 function start()
 {
-    function onRequest(request, response)
+    function onRequest(request, resp)
     {
         var pathname = url.parse(request.url).pathname;
 
+        response.set(resp);
+
         router.route(pathname, handle.getHandles());
 
-        response.writeHead(200, {"Content-Type": "text/plain"});
-        response.write("Request: " + url.parse(request.url).pathname);
-        response.end();
+        response.send();
     }
 
     http.createServer(onRequest).listen(8888);

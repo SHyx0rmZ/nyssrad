@@ -23,12 +23,18 @@ var Hash = require('hashish');
 
 var Store = { };
 
-
+/**
+ *
+ **/
 function set(key, value)
 {
     Store[key] = value;
 }
 
+
+/**
+ *
+ **/
 function get(key)
 {
     if (Hash(Store).has(key)) {

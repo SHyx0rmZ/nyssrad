@@ -20,27 +20,52 @@
  * DEALINGS IN THE SOFTWARE.                                                  *
  ******************************************************************************/
 var store = require('./store');
+var response = require('./response');
 
 var handle = { };
 
+
+/**
+ * get method, get a key from the store, build a response and send it
+ *
+ * @return value The value associated with the key, null otherwise
+ **/
 function get(param)
 {
-    console.log('[ store ] Value for key ' + param + ': ' + store.get(param));;
+    console.log('[ store  ] Value for key ' + param + ': ' + store.get(param));
+
+    if (!store.get(param)) {
+        response.build("false");
+    } else {
+        response.build(store.get(param));
+    }
 }
 
+
+/**
+ * Set a key and a value
+ *
+ * @return true on success, false otherwise
+ **/
 function set(param)
 {
     var keyValue = param.split('/');
     store.set(keyValue[0], keyValue[1]);
 
-    console.log("[ store ] Inserting key " + keyValue[0] + " with value " + keyValue[1]);
+    response.build("true");
+
+    console.log("[ store  ] Inserting key " + keyValue[0] + " with value " + keyValue[1]);
 }
+
 
 function root()
 {
-
+    response.build("nyssrad 0.1 beta - powered by node.js");
 }
 
+// / is the root handle, does nothing
+// /get is followed by a key, e.g. /get/mykey
+// /set is followed by a key and a valeue, e.g. /set/mykey/myvalue
 handle["/"] = root;
 handle["/get"] = get;
 handle["/set"] = set;
