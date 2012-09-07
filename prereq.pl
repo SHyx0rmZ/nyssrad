@@ -34,10 +34,25 @@ if (!&check_hashish) {
     }
 } else {
     print BOLD GREEN "found!\n";
+}
+
+
+if (!&check_commander) {
+    print BOLD RED "not found!\n";
+    print BOLD CYAN "  :: "; print BOLD WHITE "Trying to install commander...";
+
+    if (!&install_hashish) {
+        print BOLD RED "failed!\n";
+        print BOLD YELLOW "\nInstallation of commander failed, please check npm.install for error messages.";
+        die;
+    } else {
+        print BOLD GREEN "succeeded!\n";
+    }
+} else {
+    print BOLD GREEN "found!\n";
     print "\nYour setup looks complete, you can now run bin/nyssrad!\n";
     exit;
 }
-
 
 
 sub check_prereq
@@ -85,9 +100,40 @@ sub check_hashish
 
 }
 
+
+sub check_commander
+{
+    print BOLD WHITE " :: node.js module 'commander'...\t";
+
+    open(HANDLE, ">test.js");
+    print HANDLE "require('commander');";
+    close(HANDLE);
+
+    $result = `node test.js 2> /dev/null`;
+
+    if (${^CHILD_ERROR_NATIVE} ne 0) {
+        `rm test.js`;
+        return undef;
+    } else {
+        `rm test.js`;
+        return 1;
+    }
+}
+
 sub install_hashish
 {
     $result = `npm install hashish 2> npm.install`;
+
+    if (${^CHILD_ERROR_NATIVE} ne 0) {
+        return undef;
+    } else {
+        return 1;
+    }
+}
+
+sub install_commander
+{
+    $result = `npm install commander 2> npm.install`;
 
     if (${^CHILD_ERROR_NATIVE} ne 0) {
         return undef;
