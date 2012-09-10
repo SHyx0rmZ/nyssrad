@@ -19,58 +19,42 @@
  * FROM,  OUT OF  OR IN CONNECTION  WITH THE  SOFTWARE  OR THE  USE OR  OTHER *
  * DEALINGS IN THE SOFTWARE.                                                  *
  ******************************************************************************/
+var cmd = require('commander');
+var colors = require('colors');
 var store = require('./store');
-var response = require('./response');
+var utils = require('./utils');
 
-var handle = { };
+var commands = { };
+commands['set'] = store.set;
+commands['get'] = store.get;
+commands['exit'] = utils.exit;
+commands['quit'] = utils.exit;
 
 
-/**
- * get method, get a key from the store, build a response and send it
- *
- * @return value The value associated with the key, null otherwise
- **/
-function get(param)
+function prompt()
 {
-    if (!store.get(param)) {
-        response.build("false");
-    } else {
-        response.build(store.get(param));
+    cmd.prompt('> ', function(data) {
+        parse(data);
+        prompt();
+    });
+}
+
+
+function parse(data)
+{
+    var tokens = new Array();
+    tokens = data.split(' ');
+
+    if (typeof commands[tokens[0]] === 'function') {
+        var result = commands[tokens.shift()](tokens);
+
+        if (typeof result !== 'undefined' && result != false && result != null) {
+            console.log(result.toString().green);
+        } else {
+            console.log("undefined".red);
+        }
     }
 }
 
-
-/**
- * Set a key and a value
- *
- * @return true on success, false otherwise
- **/
-function set(param)
-{
-    var keyValue = param.split('/');
-    store.set(keyValue);
-
-    response.build("true");
-}
-
-
-function root()
-{
-    response.build("nyssrad 0.1 beta - powered by node.js");
-}
-
-// / is the root handle, does nothing
-// /get is followed by a key, e.g. /get/mykey
-// /set is followed by a key and a valeue, e.g. /set/mykey/myvalue
-handle["/"] = root;
-handle["/get"] = get;
-handle["/set"] = set;
-
-
-function getHandles()
-{
-    return handle;
-}
-
-exports.getHandles = getHandles;
+exports.prompt = prompt;
 

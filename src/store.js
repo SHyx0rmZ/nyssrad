@@ -26,9 +26,10 @@ var Store = { };
 /**
  *
  **/
-function set(key, value)
+function set(data)
 {
-    Store[key] = value;
+    Store[data[0]] = data[1];
+    return;
 }
 
 

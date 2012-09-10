@@ -19,9 +19,12 @@
  * FROM,  OUT OF  OR IN CONNECTION  WITH THE  SOFTWARE  OR THE  USE OR  OTHER *
  * DEALINGS IN THE SOFTWARE.                                                  *
  ******************************************************************************/
+var cmd = require('./prompt');
 var server = require('./server');
 
 console.log("\nnyssrad 0.1 beta - noSQL key-value-database");
 console.log("Copyright (C) 2012 Alexander Kluth <derhartmut@niwohlos.org>");
 console.log("Distributed under the terms of the MIT license\n");
 server.start();
+cmd.prompt();
+

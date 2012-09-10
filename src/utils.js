@@ -19,58 +19,10 @@
  * FROM,  OUT OF  OR IN CONNECTION  WITH THE  SOFTWARE  OR THE  USE OR  OTHER *
  * DEALINGS IN THE SOFTWARE.                                                  *
  ******************************************************************************/
-var store = require('./store');
-var response = require('./response');
-
-var handle = { };
-
-
-/**
- * get method, get a key from the store, build a response and send it
- *
- * @return value The value associated with the key, null otherwise
- **/
-function get(param)
+function exit()
 {
-    if (!store.get(param)) {
-        response.build("false");
-    } else {
-        response.build(store.get(param));
-    }
+    process.exit();
 }
 
-
-/**
- * Set a key and a value
- *
- * @return true on success, false otherwise
- **/
-function set(param)
-{
-    var keyValue = param.split('/');
-    store.set(keyValue);
-
-    response.build("true");
-}
-
-
-function root()
-{
-    response.build("nyssrad 0.1 beta - powered by node.js");
-}
-
-// / is the root handle, does nothing
-// /get is followed by a key, e.g. /get/mykey
-// /set is followed by a key and a valeue, e.g. /set/mykey/myvalue
-handle["/"] = root;
-handle["/get"] = get;
-handle["/set"] = set;
-
-
-function getHandles()
-{
-    return handle;
-}
-
-exports.getHandles = getHandles;
+exports.exit = exit;
 
