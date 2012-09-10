@@ -19,42 +19,7 @@
  * FROM,  OUT OF  OR IN CONNECTION  WITH THE  SOFTWARE  OR THE  USE OR  OTHER *
  * DEALINGS IN THE SOFTWARE.                                                  *
  ******************************************************************************/
-var cmd = require('commander');
-var colors = require('colors');
-var store = require('./store');
-var utils = require('./utils');
+var overwrite = false;
 
-var commands = { };
-commands['set'] = store.set;
-commands['get'] = store.get;
-commands['exit'] = utils.exit;
-commands['quit'] = utils.exit;
-
-
-function prompt()
-{
-    cmd.prompt('> ', function(data) {
-        parse(data);
-        prompt();
-    });
-}
-
-
-function parse(data)
-{
-    var tokens = new Array();
-    tokens = data.split(' ');
-
-    if (typeof commands[tokens[0]] === 'function') {
-        var result = commands[tokens.shift()](tokens);
-
-        if (result != false && result != null) {
-            console.log(result.toString().green);
-        } else {
-            console.log("false".red);
-        }
-    }
-}
-
-exports.prompt = prompt;
+exports.overwrite = overwrite;
 

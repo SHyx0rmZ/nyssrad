@@ -20,6 +20,7 @@
  * DEALINGS IN THE SOFTWARE.                                                  *
  ******************************************************************************/
 var Hash = require('hashish');
+var config = require('./config');
 
 var Store = { };
 
@@ -28,8 +29,15 @@ var Store = { };
  **/
 function set(data)
 {
-    Store[data[0]] = data[1];
-    return;
+    if (Hash(Store).has(data[0]) && config.overwrite) {
+        Store[data[0]] = data[1];
+        return true;
+    } else if (!Hash(Store).has(data[0])) {
+        Store[data[0]] = data[1];
+        return true;
+    } else {
+        return false;
+    }
 }
 
 
