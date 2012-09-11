@@ -36,7 +36,7 @@ sub check_prereq
     my $prereq = shift;
 
     foreach (keys %{$prereq}) {
-        print BOLD WHITE " :: " . $_ . "...\t\t\t\t\t\t\t";
+        print BOLD WHITE " :: " . $_ . "...";
         $result = `$prereq->{$_} --version &> /dev/null`;
 
         if (${^CHILD_ERROR_NATIVE} ne 0) {
@@ -61,7 +61,7 @@ sub check_mod_prereq
     my $mod_prereq = shift;
 
     foreach (keys %{$mod_prereq}) {
-        print BOLD WHITE " :: node.js module '" . $_ . "'...\t\t\t\t\t";
+        print BOLD WHITE " :: node.js module '" . $_ . "'...";
 
         open(HANDLE, ">test.js");
         print HANDLE "require('" . $mod_prereq->{$_} . "');";
@@ -80,8 +80,10 @@ sub check_mod_prereq
                 `rm test.js`;
                 return undef;
             } else {
-                print BOLD GREEN "\t\tsucceeded!\n";
+                print BOLD GREEN "succeeded!\n";
             }
+        } else {
+            print BOLD GREEN "found!\n";
         }
     }
 
