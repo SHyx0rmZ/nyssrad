@@ -83,10 +83,12 @@ sub check_mod_prereq
                 print BOLD GREEN "succeeded!\n";
             }
         } else {
+            `rm test.js`;
             print BOLD GREEN "found!\n";
         }
     }
 
+    `rm npm.install`;
     return 1;
 }
 
