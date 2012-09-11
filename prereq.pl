@@ -8,59 +8,35 @@ $Term::ANSIColor::AUTORESET = 1;
 $| = 1;
 
 my %PREREQ;
+my %MOD_PREREQ;
 my $result;
 my $error;
 
 #------------------------EDIT HERE-------------------------#
 $PREREQ{'node.js'} = 'node';
 $PREREQ{'npm'} = 'npm';
+$MOD_PREREQ{'hashish'} = 'hashish';
+$MOD_PREREQ{'commander'} = 'commander';
+$MOD_PREREQ{'colors'} = 'colors';
 #------------------------STOP HERE-------------------------#
 
 if (!&check_prereq(\%PREREQ)) {
     print BOLD YELLOW "\n  At least one prerequisite was not met. Please check your setup.\n";
-    die;
-}
-
-if (!&check_hashish) {
-    print BOLD RED "not found!\n";
-    print BOLD CYAN "  :: "; print BOLD WHITE "Trying to install hashish...";
-
-    if (!&install_hashish) {
-        print BOLD RED "failed!\n";
-        print BOLD YELLOW "\nInstallation of hashish failed, please check npm.install for error messages.";
-        die;
-    } else {
-        print BOLD GREEN "succeeded!\n";
-    }
-} else {
-    print BOLD GREEN "found!\n";
-}
-
-
-if (!&check_commander) {
-    print BOLD RED "not found!\n";
-    print BOLD CYAN "  :: "; print BOLD WHITE "Trying to install commander...";
-
-    if (!&install_hashish) {
-        print BOLD RED "failed!\n";
-        print BOLD YELLOW "\nInstallation of commander failed, please check npm.install for error messages.";
-        die;
-    } else {
-        print BOLD GREEN "succeeded!\n";
-    }
-} else {
-    print BOLD GREEN "found!\n";
-    print "\nYour setup looks complete, you can now run bin/nyssrad!\n";
     exit;
 }
 
+if (!&check_mod_prereq(\%MOD_PREREQ)) {
+    print BOLD YELLOW "\n  At least one module could not be installed. Please check the file npm.install\n";
+} else {
+    print BOLD GREEN "\n All requirements are met! You can now run bin/nyssrad.\n";
+}
 
 sub check_prereq
 {
     my $prereq = shift;
 
     foreach (keys %{$prereq}) {
-        print BOLD WHITE " :: " . $_ . "...\t\t\t\t";
+        print BOLD WHITE " :: " . $_ . "...\t\t\t\t\t\t\t";
         $result = `$prereq->{$_} --version &> /dev/null`;
 
         if (${^CHILD_ERROR_NATIVE} ne 0) {
@@ -80,65 +56,35 @@ sub check_prereq
 }
 
 
-sub check_hashish
+sub check_mod_prereq
 {
-    print BOLD WHITE " :: node.js module 'hashish'...\t\t";
+    my $mod_prereq = shift;
 
-    open(HANDLE, ">test.js");
-    print HANDLE "require('hashish');";
-    close(HANDLE);
+    foreach (keys %{$mod_prereq}) {
+        print BOLD WHITE " :: node.js module '" . $_ . "'...\t\t\t\t\t";
 
-    $result = `node test.js 2> /dev/null`;
+        open(HANDLE, ">test.js");
+        print HANDLE "require('" . $mod_prereq->{$_} . "');";
+        close(HANDLE);
 
-    if (${^CHILD_ERROR_NATIVE} ne 0) {
-        `rm test.js`;
-        return undef;
-    } else {
-        `rm test.js`;
-        return 1;
+        $result = `node test.js 2> /dev/null`;
+
+        if (${^CHILD_ERROR_NATIVE} ne 0) {
+            print BOLD RED "not found!\n";
+            print BOLD CYAN " :: Downloading and installing " . $mod_prereq->{$_}. "...";
+
+            $result = `npm install $mod_prereq->{$_} 2> npm.install`;
+
+            if (${^CHILD_ERROR_NATIVE} ne 0) {
+                print BOLD RED "failed!\n";
+                `rm test.js`;
+                return undef;
+            } else {
+                print BOLD GREEN "\t\tsucceeded!\n";
+            }
+        }
     }
 
-}
-
-
-sub check_commander
-{
-    print BOLD WHITE " :: node.js module 'commander'...\t";
-
-    open(HANDLE, ">test.js");
-    print HANDLE "require('commander');";
-    close(HANDLE);
-
-    $result = `node test.js 2> /dev/null`;
-
-    if (${^CHILD_ERROR_NATIVE} ne 0) {
-        `rm test.js`;
-        return undef;
-    } else {
-        `rm test.js`;
-        return 1;
-    }
-}
-
-sub install_hashish
-{
-    $result = `npm install hashish 2> npm.install`;
-
-    if (${^CHILD_ERROR_NATIVE} ne 0) {
-        return undef;
-    } else {
-        return 1;
-    }
-}
-
-sub install_commander
-{
-    $result = `npm install commander 2> npm.install`;
-
-    if (${^CHILD_ERROR_NATIVE} ne 0) {
-        return undef;
-    } else {
-        return 1;
-    }
+    return 1;
 }
 
