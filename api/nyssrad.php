@@ -1,3 +1,4 @@
+<?php
 /******************************************************************************
  * Copyright (c) 2012 Alexander Kluth <derhartmut@niwohlos.org>               *
  *                                                                            *
@@ -19,74 +20,18 @@
  * FROM,  OUT OF  OR IN CONNECTION  WITH THE  SOFTWARE  OR THE  USE OR  OTHER *
  * DEALINGS IN THE SOFTWARE.                                                  *
  ******************************************************************************/
+header('text/plain');
 
-/**
- * This is a simple and example API for using nyssrad.
- * For the future I will provide APIs in many different languages
- * (for each language an own repo).
- *
- * The API let you send a request and store a key as well as getting
- * a value from a given key or many values stored in a JSON object.
- *
- * To avoid having too many dependencies we will use the good old
- * XMLHttpRequest object instead of f.e. jQuery for AJAx calls.
- **/
+$url = 'http://localhost:8888/get/' . $_GET['get'];
 
-var Nyssrad = function()
-{
+$handle = fopen($url, "r");
 
-}
-
-// Uses for AJAX access (web 2.0 wooo pew pew pew yay yay yay)
-Nyssrad.prototype.ajax = new XMLHttpRequest();
-
-Nyssrad.prototype.url = "";
-
-/**
- * localhost at port 8888 is the default nyssrad-path.
- **/
-Nyssrad.prototype.proxy = null;
-
-
-Nyssrad.prototype.setURL = function(url)
-{
-    this.proxy = url + "nyssrad.php";
-    console.log(this.proxy);
-};
-
-Nyssrad.prototype.getValue = function(key, callback)
-{
-    //TODO: Not as GET parameter...
-    this.ajax.open('GET', this.proxy + '?get=' + key, true);
-
-    this.ajax.onreadystatechange = function()
-    {
-        self = this;
-        if (self.readyState == 4) {
-            var result = self.responseText;
-            callback(result);
-        }
+if ($handle) {
+    while (!feof($handle)) {
+        $buffer = fgets($handle, 4096);
+        echo $buffer;
     }
 
-    this.ajax.send(null);
+    fclose($handle);
 }
-
-
-Nyssrad.prototype.setValue = function(key, value, callback)
-{
-    this.ajax.open('GET', this.proxy + '?set=' + key + '/' + value, true);
-
-    if (this.ajax.readState == 4) {
-        var result = this.ajax.responseText;
-
-        if (result == 'true') {
-            callback(true);
-        } else {
-            callback(false);
-        }
-    }
-
-    this.ajax.send(null);
-}
-
-
+?>
