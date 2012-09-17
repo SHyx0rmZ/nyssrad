@@ -22,16 +22,28 @@
  ******************************************************************************/
 header('text/plain');
 
-$url = 'http://localhost:8888/get/' . $_GET['get'];
+$url = 'http://localhost:8888/';
 
-$handle = fopen($url, "r");
+if ($_GET['cmd'] == "get") {
+    $url = $url . 'get/' . $_GET['key'];
 
-if ($handle) {
-    while (!feof($handle)) {
-        $buffer = fgets($handle, 4096);
-        echo $buffer;
+    $handle = fopen($url, "r");
+
+    if ($handle) {
+        while (!feof($handle)) {
+            $buffer = fgets($handle, 4096);
+            echo $buffer;
+        }
+
+        fclose($handle);
     }
-
+} else if ($_GET['cmd'] == "set") {
+    $url = $url . 'set/' . $_GET['key'] . '/' . $_GET['value'];
+    $handle = fopen($url, "r");
     fclose($handle);
+} else {
+    echo "nyssrad proxy";
 }
+
+
 ?>
