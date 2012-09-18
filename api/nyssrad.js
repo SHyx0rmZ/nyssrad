@@ -29,7 +29,7 @@
  * a value from a given key or many values stored in a JSON object.
  *
  * To avoid having too many dependencies we will use the good old
- * XMLHttpRequest object instead of f.e. jQuery for AJAx calls.
+ * XMLHttpRequest object instead of f.e. jQuery for AJAX calls.
  **/
 
 var Nyssrad = function()
@@ -42,22 +42,17 @@ Nyssrad.prototype.ajax = new XMLHttpRequest();
 
 Nyssrad.prototype.url = "";
 
-/**
- * localhost at port 8888 is the default nyssrad-path.
- **/
 Nyssrad.prototype.proxy = null;
 
 
 Nyssrad.prototype.setURL = function(url)
 {
     this.proxy = url + "nyssrad.php";
-    console.log(this.proxy);
 };
 
 Nyssrad.prototype.getValue = function(key, callback)
 {
-    //TODO: Not as GET parameter...
-    this.ajax.open('GET', this.proxy + '?get=' + key, true);
+    this.ajax.open('GET', this.proxy + '?cmd=set&key=' + key, true);
 
     this.ajax.onreadystatechange = function()
     {
@@ -74,15 +69,14 @@ Nyssrad.prototype.getValue = function(key, callback)
 
 Nyssrad.prototype.setValue = function(key, value, callback)
 {
-    this.ajax.open('GET', this.proxy + '?set=' + key + '/' + value, true);
+    this.ajax.open('GET', this.proxy + '?cmd=set&key=' + key + '&value=' + value, true);
 
-    if (this.ajax.readState == 4) {
-        var result = this.ajax.responseText;
-
-        if (result == 'true') {
-            callback(true);
-        } else {
-            callback(false);
+    this.ajax.onreadystatechange = function()
+    {
+        self = this;
+        if (self.readyState == 4) {
+            var result = self.responseText;
+            callback(result);
         }
     }
 
