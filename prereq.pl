@@ -82,6 +82,7 @@ sub check_mod_prereq
                 return undef;
             } else {
                 print BOLD GREEN "succeeded!\n";
+                `rm npm.install &> /dev/null`;
             }
         } else {
             `rm test.js`;
@@ -89,7 +90,6 @@ sub check_mod_prereq
         }
     }
 
-    `rm npm.install`;
     return 1;
 }
 
