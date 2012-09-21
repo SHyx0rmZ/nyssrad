@@ -1,0 +1,40 @@
+nyssrad's dependencies
+------------------------------------------------------------------------------------------
+
+nyssrad has some dependencies. To easily check if they're met, run
+        
+        make 
+
+at the toplevel directory. It will run the script 
+
+        prereq.pl 
+        
+and check for everything it needs and install it if desired.
+
+Of course, the minimal requirements you have to met to run the setup
+are:
+
+        make (GNU make and other derivates should work)
+        perl (everything above version 5 should work)
+
+
+Requirements to run nyssrad:
+----------------------------
+        node.js (nyssrad based on node.js)
+        |
+        |------ npm (package manager of node.js)
+                |
+                |------ hashish         (fast and easy key-value-layer)
+                |------ commander       (provides cli functionallity)
+                |------ colors          (provides fancy and stylish colors for the cli)
+                |------ log             (logging functionallity)
+        jQuery (at least version 1.8.2)
+        |
+        |------ jquery-aop (aspect-oriented plugin for jQuery, essential)
+        
+jQuery and jquery-aop are not shipped with nyssrad, so have to run
+
+        make
+
+from the toplevel directory of nyssrad before you can run nyssrad.
+
