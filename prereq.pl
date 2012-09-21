@@ -18,6 +18,7 @@ $PREREQ{'npm'} = 'npm';
 $MOD_PREREQ{'hashish'} = 'hashish';
 $MOD_PREREQ{'commander'} = 'commander';
 $MOD_PREREQ{'colors'} = 'colors';
+$MOD_PREREQ{'log'} = 'log';
 #------------------------STOP HERE-------------------------#
 
 if (!&check_prereq(\%PREREQ)) {
