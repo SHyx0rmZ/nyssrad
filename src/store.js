@@ -22,21 +22,58 @@
 var Hash = require('hashish');
 var config = require('./config');
 
+var Value = function() {
+    var value;
+    var sticky = false;
+
+    this.set = function(value, sticky) {
+        this.value = value;
+        if (sticky) {
+            this.sticky = true;
+        } else {
+            this.sticky = false;
+        }
+    };
+
+    this.get = function() {
+        return this.value;
+    };
+
+    this.isSticky = function() {
+        return this.sticky;
+    };
+};
+
+
 var Store = { };
 
+
 /**
- *
+ * Set
  **/
 function set(data)
 {
-    if (Hash(Store).has(data[0]) && config.overwrite) {
-        Store[data[0]] = data[1];
-        return true;
-    } else if (!Hash(Store).has(data[0])) {
-        Store[data[0]] = data[1];
-        return true;
+    var key = data[0];
+    var value = data[1];
+    var sticky;
+
+    if (data.length > 2) {
+        sticky = data[2];
     } else {
-        return false;
+        sticky = false;
+    }
+
+    if (Hash(Store).has(key)) {
+        if (Store[key].isSticky()){
+            return false;
+        } else {
+            Store[key].set(value, sticky);
+            return true;
+        }
+    } else {
+        Store[key] = new Value();
+        Store[key].set(value, sticky);
+        return true;
     }
 }
 
@@ -47,7 +84,7 @@ function set(data)
 function get(key)
 {
     if (Hash(Store).has(key)) {
-        return Store[key];
+        return Store[key].get();
     } else {
         return null;
     }
