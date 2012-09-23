@@ -83,10 +83,27 @@ function set(data)
  **/
 function get(key)
 {
-    if (Hash(Store).has(key)) {
-        return Store[key].get();
+    if (key.length > 1) {
+        var values = new Array();
+
+        // Iterate through all keys and push the associated value
+        // into the values array.
+        for (k in key) {
+            if (Hash(Store).has(key[k])) {
+                values.push(Store[key[k]].get());
+            } else {
+                //FIXME: is null really the right way?
+                values.push(null);
+            }
+        }
+
+        return values;
     } else {
-        return null;
+        if (Hash(Store).has(key)) {
+            return Store[key].get();
+        } else {
+            return false;
+        }
     }
 }
 
