@@ -28,13 +28,6 @@ Requirements to run nyssrad:
                 |------ commander       (provides cli functionallity)
                 |------ colors          (provides fancy and stylish colors for the cli)
                 |------ log             (logging functionallity)
-        jQuery (at least version 1.8.2)
-        |
-        |------ jquery-aop (aspect-oriented plugin for jQuery, essential)
-        
-jQuery and jquery-aop are not shipped with nyssrad, so have to run
-
-        make
-
-from the toplevel directory of nyssrad before you can run nyssrad.
+                |------ twill           (aspect-oriented microframework)
+ 
 
