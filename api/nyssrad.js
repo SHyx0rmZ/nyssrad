@@ -69,6 +69,8 @@ Nyssrad.prototype.getValue = function(key, callback)
 
 Nyssrad.prototype.setValue = function(key, value, callback)
 {
+    //TODO: Check if value is an array
+
     this.ajax.open('GET', this.proxy + '?cmd=set&key=' + key + '&value=' + value, true);
 
     this.ajax.onreadystatechange = function()

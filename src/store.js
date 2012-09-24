@@ -91,9 +91,6 @@ function get(key)
         for (k in key) {
             if (Hash(Store).has(key[k])) {
                 values.push(Store[key[k]].get());
-            } else {
-                //FIXME: is null really the right way?
-                values.push(null);
             }
         }
 

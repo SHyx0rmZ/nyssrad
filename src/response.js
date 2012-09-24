@@ -39,13 +39,25 @@ function build(d)
 {
     if (!response) return false;
 
+    if (Array.isArray(d)) {
+        var obj = { };
+        obj.response = d;
+        d = JSON.stringify(obj);
+    }
+
     data = d;
 }
 
 
 function send()
 {
-    response.writeHead(200, {"Content-Type": "text/plain"});
+    try {
+        JSON.parse(data);
+        response.writeHead(200, {"Content-Type": "application/json"});
+    } catch (e) {
+        response.writeHead(200, {"Content-Type": "text/plain"});
+    }
+
     response.write(data);
     response.end();
 }
