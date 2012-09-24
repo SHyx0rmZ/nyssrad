@@ -39,11 +39,9 @@ function build(d)
 {
     if (!response) return false;
 
-    if (Array.isArray(d)) {
-        var obj = { };
-        obj.response = d;
-        d = JSON.stringify(obj);
-    }
+    var obj = { };
+    obj.response = d;
+    d = JSON.stringify(obj);
 
     data = d;
 }

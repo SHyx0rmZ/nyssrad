@@ -83,29 +83,21 @@ function set(data)
  **/
 function get(key)
 {
-    if (Array.isArray(key)) {
-        var values = new Array();
+    var values = new Array();
 
-        // Iterate through all keys and push the associated value
-        // into the values array.
-        for (k in key) {
-            if (key[k] == '/') continue;
+    // Iterate through all keys and push the associated value
+    // into the values array.
+    for (k in key) {
+        if (key[k] == '/') continue;
 
-            if (Hash(Store).has(key[k])) {
-                values.push(Store[key[k]].get());
-            } else {
-                values.push(false);
-            }
-        }
-
-        return values;
-    } else {
-        if (Hash(Store).has(key)) {
-            return Store[key].get();
+        if (Hash(Store).has(key[k])) {
+            values.push(Store[key[k]].get());
         } else {
-            return false;
+            values.push(false);
         }
     }
+
+    return values;
 }
 
 exports.set = set;
