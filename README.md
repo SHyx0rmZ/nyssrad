@@ -65,6 +65,9 @@ As you can see, nyssrad returns either true when a operation was
 successful, false when a operation was not successful or the value
 associated with a key.
 
+Hint: nyssrad returns the results via http as application/json.
+If you want other formats use one of the APIs to access nyssrad.
+
 
 4. API
 -------------------------
