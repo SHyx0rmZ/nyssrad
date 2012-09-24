@@ -32,10 +32,16 @@ var handle = { };
  **/
 function get(param)
 {
-    if (!store.get(param)) {
+    if (param.substr(param.length-1, param.length) == '/') {
+        param = param.slice(0, -1);
+    }
+
+    var params = param.split('/');
+
+    if (!store.get(params)) {
         response.build("false");
     } else {
-        response.build(store.get(param));
+        response.build(store.get(params));
     }
 }
 

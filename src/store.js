@@ -83,14 +83,18 @@ function set(data)
  **/
 function get(key)
 {
-    if (key.length > 1) {
+    if (Array.isArray(key)) {
         var values = new Array();
 
         // Iterate through all keys and push the associated value
         // into the values array.
         for (k in key) {
+            if (key[k] == '/') continue;
+
             if (Hash(Store).has(key[k])) {
                 values.push(Store[key[k]].get());
+            } else {
+                values.push(false);
             }
         }
 
