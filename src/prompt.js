@@ -23,6 +23,7 @@ var cmd = require('commander');
 var colors = require('colors');
 var store = require('./store');
 var utils = require('./utils');
+var aspects = require('./aspects');
 
 var commands = { };
 commands.set = store.set;
@@ -54,6 +55,8 @@ function parse(data)
         } else {
             console.log("false".red);
         }
+    } else {
+        console.log("unknown command " + tokens[0]);
     }
 }
 

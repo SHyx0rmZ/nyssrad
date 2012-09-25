@@ -19,95 +19,11 @@
  * FROM,  OUT OF  OR IN CONNECTION  WITH THE  SOFTWARE  OR THE  USE OR  OTHER *
  * DEALINGS IN THE SOFTWARE.                                                  *
  ******************************************************************************/
-var Hash = require('hashish');
-var config = require('./config');
-//var aspects = require('./aspect');
+var twill = require('twill');
+var store = require('./store');
 
-var Value = function() {
-    var value;
-    var sticky = false;
-
-    this.set = function(value, sticky) {
-        this.value = value;
-        if (sticky) {
-            this.sticky = true;
-        } else {
-            this.sticky = false;
-        }
-    };
-
-    this.get = function() {
-        return this.value;
-    };
-
-    this.isSticky = function() {
-        return this.sticky;
-    };
-};
-
-
-var Store = { };
-
-
-/**
- * Set
- **/
-function set(data)
-{
-    var key = data[0];
-    var value = data[1];
-    var sticky;
-
-    var return_value;
-
-    if (data.length > 2) {
-        sticky = data[2];
-    } else {
-        sticky = false;
-    }
-
-    if (Hash(Store).has(key)) {
-        if (Store[key].isSticky()) {
-            return_value = false;
-        } else {
-            Store[key].set(value, sticky);
-            return_value = true;
-        }
-    } else {
-        Store[key] = new Value();
-        Store[key].set(value, sticky);
-        return_value =  true;
-    }
-
-    return return_value;
-
-}
-
-
-/**
- *
- **/
-function get(key)
-{
-    var values = [];
-
-    // Iterate through all keys and push the associated value
-    // into the values array.
-    for (k in key) {
-        if (key[k] === '/') {
-            continue;
-        }
-
-        if (Hash(Store).has(key[k])) {
-            values.push(Store[key[k]].get());
-        } else {
-            values.push(false);
-        }
-    }
-
-    return values;
-}
-
-
-exports.set = set;
-exports.get = get;
+var store_aspect = twill.aspect(store, function(weave) {
+    weave.after.set(function() {
+        console.log("set was called");
+    });
+});
