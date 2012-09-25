@@ -57,6 +57,8 @@ function set(data)
     var value = data[1];
     var sticky;
 
+    var return_value;
+
     if (data.length > 2) {
         sticky = data[2];
     } else {
@@ -64,17 +66,19 @@ function set(data)
     }
 
     if (Hash(Store).has(key)) {
-        if (Store[key].isSticky()){
-            return false;
+        if (Store[key].isSticky()) {
+            return_value = false;
         } else {
             Store[key].set(value, sticky);
-            return true;
+            return_value = true;
         }
     } else {
         Store[key] = new Value();
         Store[key].set(value, sticky);
-        return true;
+        return_value =  true;
     }
+
+    return return_value;
 }
 
 
@@ -82,13 +86,15 @@ function set(data)
  *
  **/
 function get(key)
-{
-    var values = new Array();
+{ 
+    var values = [];
 
     // Iterate through all keys and push the associated value
     // into the values array.
     for (k in key) {
-        if (key[k] == '/') continue;
+        if (key[k] === '/') {
+            continue;
+        }
 
         if (Hash(Store).has(key[k])) {
             values.push(Store[key[k]].get());

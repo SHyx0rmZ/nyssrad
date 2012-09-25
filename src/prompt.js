@@ -25,10 +25,10 @@ var store = require('./store');
 var utils = require('./utils');
 
 var commands = { };
-commands['set'] = store.set;
-commands['get'] = store.get;
-commands['exit'] = utils.exit;
-commands['quit'] = utils.exit;
+commands.set = store.set;
+commands.get = store.get;
+commands.exit = utils.exit;
+commands.quit = utils.exit;
 
 
 function prompt()
@@ -42,21 +42,15 @@ function prompt()
 
 function parse(data)
 {
-    var tokens = new Array();
+    var tokens = [];
     tokens = data.split(' ');
 
     // First token must be a function in nyssrad
     if (typeof commands[tokens[0]] === 'function') {
         var result = commands[tokens.shift()](tokens);
 
-        if (result != false && result != null) {
-            if (Array.isArray(result)) {
-                for (res in result) {
-                    console.log(result[res].toString().green);
-                }
-            } else {
-                console.log(result.toString().green);
-            }
+        if (result !== false && result !== null) {
+            console.log(result.toString().green);
         } else {
             console.log("false".red);
         }

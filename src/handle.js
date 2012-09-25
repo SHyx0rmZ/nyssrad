@@ -32,7 +32,7 @@ var handle = { };
  **/
 function get(param)
 {
-    if (param.substr(param.length-1, param.length) == '/') {
+    if (param.substr(param.length-1, param.length) === '/') {
         param = param.slice(0, -1);
     }
 

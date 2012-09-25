@@ -53,7 +53,7 @@ function send()
         JSON.parse(data);
         response.writeHead(200, {"Content-Type": "application/json"});
     } catch (e) {
-        // Fallback, if something real strange happened 
+        // Fallback, if something real strange happened
         response.writeHead(200, {"Content-Type": "text/plain"});
     }
 
