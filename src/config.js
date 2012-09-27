@@ -19,4 +19,37 @@
  * FROM,  OUT OF  OR IN CONNECTION  WITH THE  SOFTWARE  OR THE  USE OR  OTHER *
  * DEALINGS IN THE SOFTWARE.                                                  *
  ******************************************************************************/
+var config = {
+    /**
+     * Settings for store (known stores, flushing intervals etc.)
+     **/
+    'store': {
+        // Set this to false to deactivate automatic flushing at shutdown
+        'use_default': true,
+
+        /**
+         * nyssrad can flush the complete key-value store every n seconds
+         **/
+        'flush': {
+            // Set this to true to active automatic flushing every n seconds
+            'interval': false,
+            'seconds': 60,
+        },
+
+        /**
+         * Add here all stores you want to use in nyssrad. Put the names 
+         * between ''.
+         **/
+        'stores': {
+            /**
+             * Example:
+             *
+             * 'project1': 'project1.store',
+             * 'testing': 'test.store'
+             **/
+        }
+    }
+};
+
+exports.config = config;
 
