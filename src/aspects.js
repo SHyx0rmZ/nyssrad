@@ -21,9 +21,10 @@
  ******************************************************************************/
 var twill = require('twill');
 var store = require('./store');
+var log = require('./log');
 
 var store_aspect = twill.aspect(store, function(weave) {
-    weave.after.set(function() {
-        console.log("set was called");
+    weave.after.set(function(data) {
+        
     });
 });

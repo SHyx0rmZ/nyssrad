@@ -21,6 +21,7 @@
  ******************************************************************************/
 var Hash = require('hashish');
 var config = require('./config');
+var log = require('./log');
 
 var Value = function() {
     var value;
@@ -53,6 +54,10 @@ var Store = { };
  **/
 function set(data)
 {
+    if (data.length == 0) {
+        return false;
+    }
+
     var key = data[0];
     var value = data[1];
     var sticky;
