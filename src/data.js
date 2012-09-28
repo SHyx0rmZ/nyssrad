@@ -19,13 +19,44 @@
  * FROM,  OUT OF  OR IN CONNECTION  WITH THE  SOFTWARE  OR THE  USE OR  OTHER *
  * DEALINGS IN THE SOFTWARE.                                                  *
  ******************************************************************************/
-var data = require('./data');
+var fs = require('fs');
+var config = require('./config');
+var store = require('./store');
 
-function exit()
+function flush()
 {
-    data.flush();
-    process.exit();
+    if (config.config.store.use_default == true) {
+        // Get the whole store content as a JSON string
+        var content = store.getJSONfiedStore();
+
+        fs.writeFileSync(config.config.store.stores.default, content, 'utf8', function(error) {
+            if (error) {
+                console.log(error);
+            } else {
+                console.log('Wrote contents to disk (' + config.config.store.stores.default + ')');
+            }
+        });
+    }
 }
 
-exports.exit = exit;
+function load()
+{
+    if (config.config.store.use_default == true) {
+        console.log('Loading contents from ' + config.config.store.stores.default + '...');
+        var content = fs.readFileSync(config.config.store.stores.default, 'utf8', function(error) {
+            if (error) {
+                //console.log(error);
+                console.log("Error while loading default store");
+            } else {
+                console.log('Loaded default store ' + config.config.store.stores.default);
+            }
+        });
+
+        store.setStore(JSON.parse(content));
+        console.log('Done loading.');
+    } //else {
+}
+
+exports.flush = flush;
+exports.load = load;
 

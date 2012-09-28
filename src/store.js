@@ -21,7 +21,6 @@
  ******************************************************************************/
 var Hash = require('hashish');
 var config = require('./config');
-//var aspects = require('./aspect');
 
 var Value = function() {
     var value;
@@ -41,7 +40,7 @@ var Value = function() {
     };
 
     this.isSticky = function() {
-        return this.sticky;
+        return sticky;
     };
 };
 
@@ -109,5 +108,30 @@ function get(key)
 }
 
 
+function getStore()
+{
+    return Store;
+}
+
+
+function setStore(store)
+{
+    for (key in store) {
+        Store[key] = new Value();
+        Store[key].set(store[key].value, store[key].sticky);
+    }
+}
+
+
+function getJSONfiedStore()
+{
+    return JSON.stringify(Store);
+}
+
+
 exports.set = set;
 exports.get = get;
+exports.getStore = getStore;
+exports.getJSONfiedStore = getJSONfiedStore;
+exports.setStore = setStore;
+

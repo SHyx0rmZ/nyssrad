@@ -27,6 +27,10 @@ var config = {
         // Set this to false to deactivate automatic flushing at shutdown
         'use_default': true,
 
+        // Does (whyever) a default file with the same time exist,
+        // allow it to overwrite (or not)
+        'overwrite_default': true,
+
         /**
          * nyssrad can flush the complete key-value store every n seconds
          **/
@@ -41,11 +45,12 @@ var config = {
          * between ''.
          **/
         'stores': {
+            // You can change the name of the default store, but this
+            // is not recommended
+            'default': 'default.store'
             /**
-             * Example:
-             *
-             * 'project1': 'project1.store',
-             * 'testing': 'test.store'
+             * For now, you can specify your store here:
+             * 'store': 'mystore.store'
              **/
         }
     }

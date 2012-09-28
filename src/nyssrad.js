@@ -21,10 +21,13 @@
  ******************************************************************************/
 var cmd = require('./prompt');
 var server = require('./server');
+var data = require('./data');
 
 console.log("\nnyssrad 0.1 beta - noSQL key-value-database");
 console.log("Copyright (C) 2012 Alexander Kluth <derhartmut@niwohlos.org>");
 console.log("Distributed under the terms of the MIT license\n");
+
+data.load();
 server.start();
 cmd.prompt();
 
