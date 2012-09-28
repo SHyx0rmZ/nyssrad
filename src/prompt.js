@@ -20,7 +20,7 @@
  * DEALINGS IN THE SOFTWARE.                                                  *
  ******************************************************************************/
 var cmd = require('commander');
-var colors = require('colors');
+var log = require('./log');
 var store = require('./store');
 var utils = require('./utils');
 var aspects = require('./aspects');
@@ -51,12 +51,12 @@ function parse(data)
         var result = commands[tokens.shift()](tokens);
 
         if (result !== false && result !== null) {
-            console.log(result.toString().green);
+            log.data(result);
         } else {
-            console.log("false".red);
+            log.failure("false");
         }
     } else {
-        console.log("unknown command " + tokens[0]);
+        log.message("unknown command " + tokens[0]);
     }
 }
 

@@ -22,10 +22,12 @@
 var cmd = require('./prompt');
 var server = require('./server');
 var data = require('./data');
+var env = require('./env');
+var log = require('./log');
 
-console.log("\nnyssrad 0.1 beta - noSQL key-value-database");
-console.log("Copyright (C) 2012 Alexander Kluth <derhartmut@niwohlos.org>");
-console.log("Distributed under the terms of the MIT license\n");
+log.message("\nnyssrad 0.1 beta - noSQL key-value-database");
+log.glitzer("Copyright (C) 2012 Alexander Kluth <derhartmut@niwohlos.org>");
+log.message("Distributed under the terms of the MIT license\n");
 
 data.load();
 server.start();

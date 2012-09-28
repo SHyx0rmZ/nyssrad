@@ -21,6 +21,15 @@
  ******************************************************************************/
 var config = {
     /**
+     * General/environmental settings
+     **/
+    'env': {
+        // If you don't like any colors, set this to false.
+        // Otherwise: Colors \o/
+        'colors': true
+    },
+
+    /**
      * Settings for store (known stores, flushing intervals etc.)
      **/
     'store': {

@@ -19,4 +19,67 @@
  * FROM,  OUT OF  OR IN CONNECTION  WITH THE  SOFTWARE  OR THE  USE OR  OTHER *
  * DEALINGS IN THE SOFTWARE.                                                  *
  ******************************************************************************/
-;
+var colors = require('colors');
+var config = require('./config');
+
+if (config.config.env.colors == true) {
+    colors.setTheme({
+        glitzer: 'rainbow',
+        input: 'grey',
+        verbose: 'cyan',
+        prompt: 'grey',
+        success: 'green',
+        data: 'white',
+        help: 'cyan',
+        warn: 'yellow',
+        debug: 'yellow',
+        error: 'red',
+        message: 'white'
+    });
+} else {
+    colors.setTheme({
+        glitzer: 'grey',
+        input: 'grey',
+        verbose: 'grey',
+        prompt: 'grey',
+        success: 'grey',
+        data: 'grey',
+        help: 'grey',
+        warn: 'grey',
+        debug: 'grey',
+        error: 'grey',
+        message: 'grey'
+    });
+}
+
+function success(str) {
+    console.log(str.toString().success);
+}
+
+function failure(str) {
+    console.log(str.toString().error);
+}
+
+function debug(str) {
+    console.log(str.toString().debug);
+}
+
+function message(str) {
+    console.log(str.toString().message);
+}
+
+function data(str) {
+    console.log(str.toString().bold.data);
+}
+
+function glitzer(str) {
+    console.log(str.toString().glitzer);
+}
+
+exports.success = success;
+exports.failure = failure;
+exports.debug = debug;
+exports.message = message;
+exports.glitzer = glitzer;
+exports.data = data;
+

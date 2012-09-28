@@ -22,6 +22,8 @@
 var fs = require('fs');
 var config = require('./config');
 var store = require('./store');
+var log = require('./log');
+
 
 function flush()
 {
@@ -29,32 +31,28 @@ function flush()
         // Get the whole store content as a JSON string
         var content = store.getJSONfiedStore();
 
-        fs.writeFileSync(config.config.store.stores.default, content, 'utf8', function(error) {
-            if (error) {
-                console.log(error);
-            } else {
-                console.log('Wrote contents to disk (' + config.config.store.stores.default + ')');
-            }
-        });
+        try {
+            fs.writeFileSync(config.config.store.stores.default, content, 'utf8');
+        } catch (e) {
+            log.failure(e);
+        }
     }
 }
+
 
 function load()
 {
     if (config.config.store.use_default == true) {
         console.log('Loading contents from ' + config.config.store.stores.default + '...');
-        var content = fs.readFileSync(config.config.store.stores.default, 'utf8', function(error) {
-            if (error) {
-                //console.log(error);
-                console.log("Error while loading default store");
-            } else {
-                console.log('Loaded default store ' + config.config.store.stores.default);
-            }
-        });
 
-        store.setStore(JSON.parse(content));
-        console.log('Done loading.');
-    } //else {
+        try {
+            var content = fs.readFileSync(config.config.store.stores.default, 'utf8');
+            store.setStore(JSON.parse(content));
+            log.success('Successfully loaded');
+        } catch (e) {
+            log.failure(e);
+        }
+    }
 }
 
 exports.flush = flush;
