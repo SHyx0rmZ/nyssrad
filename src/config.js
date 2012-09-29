@@ -46,7 +46,7 @@ var config = {
         'flush': {
             // Set this to true to active automatic flushing every n seconds
             'interval': false,
-            'seconds': 60,
+            'milliseconds': 3000,
         },
 
         /**

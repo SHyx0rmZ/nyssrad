@@ -55,6 +55,14 @@ function load()
     }
 }
 
+
+function registerFlushing()
+{
+    setInterval(flush, config.config.store.flush.milliseconds);
+}
+
+
 exports.flush = flush;
 exports.load = load;
+exports.registerFlushing = registerFlushing;
 

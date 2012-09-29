@@ -23,11 +23,16 @@ var cmd = require('./prompt');
 var server = require('./server');
 var data = require('./data');
 var env = require('./env');
+var config = require('./config');
 var log = require('./log');
 
 log.message("\nnyssrad 0.1 beta - noSQL key-value-database");
 log.glitzer("Copyright (C) 2012 Alexander Kluth <derhartmut@niwohlos.org>");
 log.message("Distributed under the terms of the MIT license\n");
+
+if (config.config.store.flush.interval) {
+    data.registerFlushing();
+}
 
 data.load();
 server.start();
