@@ -60,6 +60,12 @@ function set(param)
 }
 
 
+function getStore()
+{
+    response.build(store.getStore());
+}
+
+
 function root()
 {
     response.build("nyssrad 0.1 beta - powered by node.js");
@@ -71,7 +77,7 @@ function root()
 handle["/"] = root;
 handle["/get"] = get;
 handle["/set"] = set;
-
+handle["/getstore"] = getStore;
 
 function getHandles()
 {
