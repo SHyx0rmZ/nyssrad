@@ -36,5 +36,8 @@ if (config.config.store.flush.interval) {
 
 data.load();
 server.start();
-cmd.prompt();
+
+if (config.config.env.prompt) {
+    cmd.prompt();
+}
 
