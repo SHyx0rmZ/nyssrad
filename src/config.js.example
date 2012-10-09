@@ -26,7 +26,14 @@ var config = {
     'env': {
         // If you don't like any colors, set this to false.
         // Otherwise: Colors \o/
-        'colors': true
+        'colors': true,
+
+        // If set to false, there is no prompt fired at startup.
+        // Can also be set via --noprompt
+        'prompt': true,
+
+        // Suppresses startup-messages and other information
+        'suppress_messages': false
     },
 
     /**
