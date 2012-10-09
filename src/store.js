@@ -25,14 +25,14 @@ var log = require('./log');
 
 var Value = function() {
     var value;
-    var sticky = false;
+    var readonly = false;
 
-    this.set = function(value, sticky) {
+    this.set = function(value, readonly) {
         this.value = value;
-        if (sticky) {
-            this.sticky = true;
+        if (readonly) {
+            this.readonly = true;
         } else {
-            this.sticky = false;
+            this.readonly = false;
         }
     };
 
@@ -40,8 +40,8 @@ var Value = function() {
         return this.value;
     };
 
-    this.isSticky = function() {
-        return sticky;
+    this.readOnly = function() {
+        return this.readonly;
     };
 };
 
@@ -60,26 +60,26 @@ function set(data)
 
     var key = data[0];
     var value = data[1];
-    var sticky;
+    var readonly;
 
     var return_value;
 
     if (data.length > 2) {
-        sticky = data[2];
+        readonly = data[2];
     } else {
-        sticky = false;
+        readonly = false;
     }
 
     if (Hash(Store).has(key)) {
         if (Store[key].isSticky()) {
             return_value = false;
         } else {
-            Store[key].set(value, sticky);
+            Store[key].set(value, readonly);
             return_value = true;
         }
     } else {
         Store[key] = new Value();
-        Store[key].set(value, sticky);
+        Store[key].set(value, readonly);
         return_value =  true;
     }
 
@@ -123,7 +123,7 @@ function setStore(store)
 {
     for (key in store) {
         Store[key] = new Value();
-        Store[key].set(store[key].value, store[key].sticky);
+        Store[key].set(store[key].value, store[key].readonly);
     }
 }
 
