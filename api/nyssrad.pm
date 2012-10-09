@@ -24,10 +24,9 @@ package nyssrad;
 use strict;
 use warnings;
 use JSON;
-use LWP::Simple;
+use LWP::Simple qw(!get);
 
 my $json = JSON->new->allow_nonref;
-
 
 sub new
 {
@@ -37,20 +36,46 @@ sub new
     return $ref;
 }
 
-
 sub get
 {
+    shift;
+
+    my $url = 'http://localhost:8888/get/';
+
     foreach (@_) {
-        print $_;
+        $url .= $_ . '/';
     }
 
-    my $contents = $lwpget('http://localhost:8888/');
+    my $contents = LWP::Simple::get($url);
 
-    #return $json->decode($contents);
+    return $json->decode($contents);
 }
-
 
 sub set
 {
+    my $key = $_[1];
+    my $value = $_[2];
+
+    my $url = 'http://localhost:8888/set/' . $key . '/' . $value;
+
+    LWP::Simple::get($url);
+}
+
+
+sub getStore
+{
+    #TODO: 
+    # foreach (keys %{$contents->{'response'}}) {
+    #   print $_ . "\n";
+    #   print $contents->{'response'}->{$_}->{'value'} . "\n";
+    # }
+    # -> Way too complicated...
+    #
+    my $content = $json->decode(LWP::Simple::get('http://localhost:8888/getstore'));
+    #my %newcontent = { };
+
+    return $content; 
+
 
 }
+
