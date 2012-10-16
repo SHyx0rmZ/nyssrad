@@ -50,7 +50,10 @@ var Store = { };
 
 
 /**
- * Set
+ * Set a key-value pair
+ *
+ * @param data First field is the key, second the value
+ * @return true if the key could be stored successfully, false otherwise or if the key is readonly
  **/
 function set(data)
 {
@@ -89,7 +92,9 @@ function set(data)
 
 
 /**
+ * Get a value from a specified key
  *
+ * @param key The specified key
  **/
 function get(key)
 {
@@ -113,12 +118,20 @@ function get(key)
 }
 
 
+/**
+ * @return The store
+ **/
 function getStore()
 {
     return Store;
 }
 
 
+/*
+ * Add a new store to the current store
+ *
+ * @param store The new store
+ **/
 function setStore(store)
 {
     for (key in store) {
@@ -128,14 +141,21 @@ function setStore(store)
 }
 
 
+/**
+ * @return The complete store as a JSON string
+ **/
 function getJSONfiedStore()
 {
     return JSON.stringify(Store);
 }
 
 
+/**
+ * Exports
+ **/
 exports.set = set;
 exports.get = get;
+exports.name;
 exports.getStore = getStore;
 exports.getJSONfiedStore = getJSONfiedStore;
 exports.setStore = setStore;
