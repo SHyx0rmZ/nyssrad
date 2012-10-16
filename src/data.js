@@ -26,17 +26,27 @@ var log = require('./log');
 
 var thisStore = undefined;
 
-function flush()
+function flush(storename)
 {
-    if (config.config.store.use_default == true) {
-        // Get the whole store content as a JSON string
-        var content = store.getJSONfiedStore();
+    var filename = "";
 
-        try {
-            fs.writeFileSync(config.config.store.stores.default, content, 'utf8');
-        } catch (e) {
-            log.failure(e);
-        }
+    if (typeof storename != undefined) {
+        filename = storename.toString();
+    } else if (thisStore != undefined) {
+        filename = thisStore;
+    } else if (config.config.store.use_default == true) {
+        filename = config.config.store.stores.default;
+    }
+
+    var content = store.getJSONfiedStore();
+
+    try {
+        fs.writeFileSync(filename, content, 'utf8');
+        log.message('Wrote file ' + filename);
+        return true;
+    } catch (e) {
+        log.failure(e);
+        return false;
     }
 }
 

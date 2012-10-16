@@ -23,6 +23,7 @@ var cmd = require('commander');
 var log = require('./log');
 var store = require('./store');
 var utils = require('./utils');
+var data = require('./data');
 var aspects = require('./aspects');
 
 var commands = { };
@@ -30,12 +31,12 @@ commands.set = store.set;
 commands.get = store.get;
 commands.exit = utils.exit;
 commands.quit = utils.exit;
-
+commands.flush = data.flush;
 
 function prompt()
 {
-    cmd.prompt('> ', function(data) {
-        parse(data);
+    cmd.prompt('> ', function(promptdata) {
+        parse(promptdata);
         prompt();
     });
 }

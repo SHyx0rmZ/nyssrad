@@ -64,6 +64,10 @@ function debug(str) {
     console.log(str.toString().debug);
 }
 
+function warn(str) {
+    console.log(str.toString().warn);
+}
+
 function message(str) {
     console.log(str.toString().message);
 }
@@ -82,4 +86,5 @@ exports.debug = debug;
 exports.message = message;
 exports.glitzer = glitzer;
 exports.data = data;
+exports.warn = warn;
 
