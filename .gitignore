@@ -2,3 +2,4 @@
 *.store
 node_modules/ 
 test/
+src/config.js
