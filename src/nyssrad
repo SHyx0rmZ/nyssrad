@@ -36,6 +36,8 @@ log.message("Distributed under the terms of the MIT license\n");
 if ((argv.store)) {
     log.warn('Loading store from file ' + argv.store + ', default store is not loaded!');
     data.setFilename(argv.store);
+} else if ((argv.port)) {
+    config.config.server.port = argv.port;
 }
 
 if (config.config.store.flush.interval) {

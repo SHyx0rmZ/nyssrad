@@ -25,6 +25,7 @@ var router = require('./router');
 var handle = require('./handle');
 var response = require('./response');
 var log = require('./log');
+var config = require('./config');
 
 function start()
 {
@@ -39,8 +40,8 @@ function start()
         response.send();
     }
 
-    http.createServer(onRequest).listen(8888);
-    log.message("Started at port 8888");
+    http.createServer(onRequest).listen(config.config.server.port);
+    log.message("Started at port " + config.config.server.port);
 }
 
 exports.start = start;
