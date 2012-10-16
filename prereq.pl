@@ -20,6 +20,7 @@ $MOD_PREREQ{'commander'} = 'commander';
 $MOD_PREREQ{'colors'} = 'colors';
 $MOD_PREREQ{'log'} = 'log';
 $MOD_PREREQ{'twill'} = 'twill';
+$MOD_PREREQ{'optimist'} = 'optimist';
 #------------------------STOP HERE-------------------------#
 
 if (!&check_prereq(\%PREREQ)) {

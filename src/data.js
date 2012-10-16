@@ -24,6 +24,7 @@ var config = require('./config');
 var store = require('./store');
 var log = require('./log');
 
+var thisStore = undefined;
 
 function flush()
 {
@@ -42,16 +43,20 @@ function flush()
 
 function load()
 {
-    if (config.config.store.use_default == true) {
-        console.log('Loading contents from ' + config.config.store.stores.default + '...');
+    var filename = "";
 
-        try {
-            var content = fs.readFileSync(config.config.store.stores.default, 'utf8');
-            store.setStore(JSON.parse(content));
-            log.success('Successfully loaded');
-        } catch (e) {
-            log.failure(e);
-        }
+    if (thisStore != undefined) {
+        filename = thisStore;
+    } else if (config.config.store.use_default == true) {
+        filename = config.config.store.stores.default;
+    }
+
+    try {
+        var content = fs.readFileSync(filename, 'utf8');
+        store.setStore(JSON.parse(content));
+        log.success('Successfully loaded');
+    } catch (e) {
+        log.failure(e);
     }
 }
 
@@ -62,7 +67,13 @@ function registerFlushing()
 }
 
 
+function setFilename(filename)
+{
+    thisStore = filename;
+}
+
 exports.flush = flush;
 exports.load = load;
 exports.registerFlushing = registerFlushing;
+exports.setFilename = setFilename;
 
