@@ -22,8 +22,7 @@ fast API and simple methods to set values with a key and to get them.
 2. REQUIREMENTS
 --------------------
 All requirements are listed in the file DEPENDENCIES. You need at least
-node.js and npm. Also, you should have the permission to create a
-socket under the port 8888.
+node.js and npm.
 
 
 3. USAGE
@@ -75,7 +74,7 @@ nyssrad provides a simple and clean API for several languages.
 In the directory api/ you can find all supported languages.
 
 Important: If you want to use the JavaScript API make sure you
-have nyssrad_proxy.php as well shipped with your solution.
+have nyssrad\_proxy.php as well shipped with your solution.
 
  
 5. CONTRIBUTION
