@@ -37,17 +37,17 @@ if ((argv.store)) {
     log.warn('Loading store from file ' + argv.store + ', default store is not loaded!');
     data.setFilename(argv.store);
 } else if ((argv.port)) {
-    config.config.server.port = argv.port;
+    config.server.port = argv.port;
 }
 
-if (config.config.store.flush.interval) {
+if (config.store.flush.interval) {
     data.registerFlushing();
 }
 
 data.load();
 server.start();
 
-if (config.config.env.prompt) {
+if (config.env.prompt) {
     cmd.prompt();
 }
 

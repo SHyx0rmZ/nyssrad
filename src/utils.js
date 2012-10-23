@@ -21,9 +21,9 @@
  ******************************************************************************/
 var data = require('./data');
 
-function exit()
+function exit(storename)
 {
-    data.flush();
+    data.flush(storename);
     process.exit();
 }
 

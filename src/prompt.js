@@ -33,6 +33,7 @@ commands.exit = utils.exit;
 commands.quit = utils.exit;
 commands.flush = data.flush;
 
+
 function prompt()
 {
     cmd.prompt('> ', function(promptdata) {

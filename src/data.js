@@ -24,18 +24,23 @@ var config = require('./config');
 var store = require('./store');
 var log = require('./log');
 
-var thisStore = undefined;
+var thisStore;
 
+
+/**
+ * Flush the whole store into the default/a store.
+ *
+ * @param storename
+ * @return true if success, false if no success, nothing if there's nothing to flush
+ **/
 function flush(storename)
 {
     var filename = "";
 
-    if (typeof storename != undefined) {
-        filename = storename.toString();
-    } else if (thisStore != undefined) {
-        filename = thisStore;
-    } else if (config.config.store.use_default == true) {
-        filename = config.config.store.stores.default;
+    if (storename.length > 0) {
+        filename = storename[0].toString();
+    } else if (config.store.use_default) {
+        filename = config.store.stores.default;
     }
 
     var content = store.getJSONfiedStore();
@@ -46,6 +51,7 @@ function flush(storename)
         return true;
     } catch (e) {
         log.failure(e);
+        log.debug(e.stack);
         return false;
     }
 }
@@ -57,8 +63,11 @@ function load()
 
     if (thisStore != undefined) {
         filename = thisStore;
-    } else if (config.config.store.use_default == true) {
-        filename = config.config.store.stores.default;
+    } else if (config.store.use_default == true) {
+        filename = config.store.stores.default;
+    } else {
+        log.debug('Nothing to load');
+        return;
     }
 
     try {
@@ -73,7 +82,7 @@ function load()
 
 function registerFlushing()
 {
-    setInterval(flush, config.config.store.flush.milliseconds);
+    setInterval(flush, config.store.flush.milliseconds);
 }
 
 

@@ -20,12 +20,14 @@
  * DEALINGS IN THE SOFTWARE.                                                  *
  ******************************************************************************/
 var http = require('http');
+var spdy = require('spdy');
 var url = require('url');
 var router = require('./router');
 var handle = require('./handle');
 var response = require('./response');
 var log = require('./log');
 var config = require('./config');
+
 
 function start()
 {
@@ -40,8 +42,17 @@ function start()
         response.send();
     }
 
-    http.createServer(onRequest).listen(config.config.server.port);
-    log.message("Started at port " + config.config.server.port);
+    if (config.server.protocol === 'http') {
+        http.createServer(onRequest).listen(config.server.port);
+    } else if (config.server.protocol === 'spdy') {
+        spdy.createServer(onRequest).listen(config.server.port);
+    } else {
+        // error in config? No problem, nyssrad to the rescue
+        http.createServer(onRequest).listen(config.server.port);
+    }
+
+    log.message("Started at port " + config.server.port);
 }
 
 exports.start = start;
+

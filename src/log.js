@@ -22,7 +22,7 @@
 var colors = require('colors');
 var config = require('./config');
 
-if (config.config.env.colors == true) {
+if (config.env.colors == true) {
     colors.setTheme({
         glitzer: 'rainbow',
         input: 'grey',
@@ -61,7 +61,9 @@ function failure(str) {
 }
 
 function debug(str) {
-    console.log(str.toString().debug);
+    if (config.env.debug) { 
+        console.log(str.toString().debug);
+    }
 }
 
 function warn(str) {
