@@ -21,6 +21,7 @@ $MOD_PREREQ{'colors'} = 'colors';
 $MOD_PREREQ{'log'} = 'log';
 $MOD_PREREQ{'twill'} = 'twill';
 $MOD_PREREQ{'optimist'} = 'optimist';
+$MOD_PREREQ{'spdy'} = 'spdy';
 #------------------------STOP HERE-------------------------#
 
 if (!&check_prereq(\%PREREQ)) {

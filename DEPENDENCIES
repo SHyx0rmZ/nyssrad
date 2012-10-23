@@ -29,5 +29,6 @@ Requirements to run nyssrad:
                 |------ colors          (provides fancy and stylish colors for the cli)
                 |------ log             (logging functionallity)
                 |------ twill           (aspect-oriented microframework)
- 
+                |------ optimist        (for commandline parsing)
+                |------ spdy            (implementation of the SPDY protocol (http://chromium.org/spdy)
 
