@@ -39,8 +39,12 @@ function flush(storename)
 
     if (storename.length > 0) {
         filename = storename[0].toString();
+    } else if (typeof thisStore != 'undefined') {
+        filename = thisStore;
     } else if (config.store.use_default) {
         filename = config.store.stores.default;
+    } else {
+        return false;
     }
 
     var content = store.getJSONfiedStore();
@@ -57,6 +61,9 @@ function flush(storename)
 }
 
 
+/**
+ * Load a store from file
+ **/
 function load()
 {
     var filename = "";
@@ -90,6 +97,7 @@ function setFilename(filename)
 {
     thisStore = filename;
 }
+
 
 exports.flush = flush;
 exports.load = load;
