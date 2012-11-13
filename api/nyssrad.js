@@ -52,7 +52,7 @@ Nyssrad.prototype.setURL = function(url)
 
 Nyssrad.prototype.getValue = function(key, callback)
 {
-    this.ajax.open('GET', this.proxy + '?cmd=set&key=' + key, true);
+    this.ajax.open('GET', this.proxy + '?cmd=get&key=' + key, true);
 
     this.ajax.onreadystatechange = function()
     {
