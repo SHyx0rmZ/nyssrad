@@ -66,6 +66,12 @@ function getStore()
 }
 
 
+function exportStore()
+{
+    response.build(store.getJSONfiedStore());
+}
+
+
 function root()
 {
     response.build("nyssrad 0.1 beta - powered by node.js");
@@ -78,6 +84,7 @@ handle["/"] = root;
 handle["/get"] = get;
 handle["/set"] = set;
 handle["/getstore"] = getStore;
+handle["/export"] = exportStore;
 
 function getHandles()
 {
@@ -85,4 +92,3 @@ function getHandles()
 }
 
 exports.getHandles = getHandles;
-

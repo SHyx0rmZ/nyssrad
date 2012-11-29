@@ -64,4 +64,3 @@ function parse(data)
 }
 
 exports.prompt = prompt;
-
