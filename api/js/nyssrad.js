@@ -34,55 +34,46 @@
 
 var Nyssrad = function()
 {
-
-}
-
-// Uses for AJAX access (web 2.0 wooo pew pew pew yay yay yay)
-Nyssrad.prototype.ajax = new XMLHttpRequest();
-
-Nyssrad.prototype.url = "";
-
-Nyssrad.prototype.proxy = null;
-
-
-Nyssrad.prototype.setURL = function(url)
-{
-    this.proxy = url + "nyssrad.php";
+    this.ajax = new XMLHttpRequest();
+    this.url = '';
+    this.proxy = null;
 };
 
-Nyssrad.prototype.getValue = function(key, callback)
-{
-    this.ajax.open('GET', this.proxy + '?cmd=set&key=' + key, true);
+Nyssrad.prototype = {
+    setURL: function(url) {
+        this.proxy = url + "nyssrad.php";
+    },
 
-    this.ajax.onreadystatechange = function()
-    {
-        self = this;
-        if (self.readyState == 4) {
-            var result = self.responseText;
-            callback(result);
+    getValue: function(key, callback) {
+        this.ajax.open('GET', this.proxy + '?cmd=set&key=' + key, true);
+
+        this.ajax.onreadystatechange = function()
+        {
+            self = this;
+            if (self.readyState === 4) {
+                var result = self.responseText;
+                callback(result);
+            }
         }
-    }
 
-    this.ajax.send(null);
-}
+        this.ajax.send(null);
+    },
 
+    setValue: function(key, value, callback) {
+        //TODO: Check if value is an array
 
-Nyssrad.prototype.setValue = function(key, value, callback)
-{
-    //TODO: Check if value is an array
+        this.ajax.open('GET', this.proxy + '?cmd=set&key=' + key + '&value=' + value, true);
 
-    this.ajax.open('GET', this.proxy + '?cmd=set&key=' + key + '&value=' + value, true);
-
-    this.ajax.onreadystatechange = function()
-    {
-        self = this;
-        if (self.readyState == 4) {
-            var result = self.responseText;
-            callback(result);
+        this.ajax.onreadystatechange = function()
+        {
+            self = this;
+            if (self.readyState == 4) {
+                var result = self.responseText;
+                callback(result);
+            }
         }
+
+        this.ajax.send(null);
     }
-
-    this.ajax.send(null);
-}
-
+};
 

@@ -20,7 +20,7 @@
 #  FROM,  OUT OF  OR IN CONNECTION  WITH THE  SOFTWARE  OR THE  USE OR  OTHER #
 #  DEALINGS IN THE SOFTWARE.                                                  #
 ###############################################################################
-package nyssrad;
+package Nyssrad;
 use strict;
 use warnings;
 use JSON;
@@ -28,13 +28,16 @@ use LWP::Simple qw(!get);
 
 my $json = JSON->new->allow_nonref;
 
-
 sub new
 {
-    my $type = shift;
-    my $ref = { };
-    bless($ref, $type);
-    return $ref;
+    my ($class) = @_;
+    my $self = {
+        _port => undef
+    };
+
+    bless $self, $class;
+
+    return $self;
 }
 
 
@@ -42,7 +45,7 @@ sub get
 {
     shift;
 
-    my $url = 'http://localhost:8888/get/';
+    my $url = 'http://localhost:$self->{_port}/get/';
 
     foreach (@_) {
         $url .= $_ . '/';
