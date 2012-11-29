@@ -57,7 +57,7 @@ var Store = { };
  **/
 function set(data)
 {
-    if (data.length == 0) {
+    if (data.length === 0) {
         return false;
     }
 
@@ -87,7 +87,6 @@ function set(data)
     }
 
     return return_value;
-
 }
 
 
