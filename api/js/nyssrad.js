@@ -39,13 +39,14 @@ var Nyssrad = function()
     this.proxy = null;
 };
 
+
 Nyssrad.prototype = {
     setURL: function(url) {
         this.proxy = url + "nyssrad.php";
     },
 
     getValue: function(key, callback) {
-        this.ajax.open('GET', this.proxy + '?cmd=set&key=' + key, true);
+        this.ajax.open('GET', this.proxy + '?cmd=get&key=' + key, true);
 
         this.ajax.onreadystatechange = function()
         {
@@ -54,10 +55,9 @@ Nyssrad.prototype = {
                 var result = self.responseText;
                 callback(result);
             }
-        }
 
-        this.ajax.send(null);
-    },
+            this.ajax.send(null);
+        },
 
     setValue: function(key, value, callback) {
         //TODO: Check if value is an array
