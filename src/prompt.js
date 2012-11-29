@@ -29,6 +29,7 @@ var aspects = require('./aspects');
 var commands = { };
 commands.set = store.set;
 commands.get = store.get;
+commands.export = store.getJSONfiedStore;
 commands.exit = utils.exit;
 commands.quit = utils.exit;
 commands.flush = data.flush;
