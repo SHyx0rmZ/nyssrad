@@ -23,6 +23,10 @@ var Hash = require('hashish');
 var config = require('./config');
 var log = require('./log');
 
+
+/**
+ * Basic data structure of a value stored in the store
+ **/
 var Value = function() {
     var value;
     var readonly = false;
@@ -74,7 +78,7 @@ function set(data)
     }
 
     if (Hash(Store).has(key)) {
-        if (Store[key].isSticky()) {
+        if (Store[key].readOnly()) {
             return_value = false;
         } else {
             Store[key].set(value, readonly);
