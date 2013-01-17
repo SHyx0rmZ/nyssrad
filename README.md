@@ -67,6 +67,8 @@ associated with a key.
 Hint: nyssrad returns the results via http as application/json.
 If you want other formats use one of the APIs to access nyssrad.
 
+To run nyssrad as a daemon, simply add "--start" as a parameter.
+
 
 4. API
 -------------------------
@@ -76,6 +78,7 @@ In the directory api/ you can find all supported languages.
 Important: If you want to use the JavaScript API make sure you
 have nyssrad\_proxy.php as well shipped with your solution.
 
+The API repository is found here: https://github.com/deralex/nyssrad-api
  
 5. CONTRIBUTION
 -------------------------

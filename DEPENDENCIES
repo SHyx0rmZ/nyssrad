@@ -31,4 +31,4 @@ Requirements to run nyssrad:
                 |------ twill           (aspect-oriented microframework)
                 |------ optimist        (for commandline parsing)
                 |------ spdy            (implementation of the SPDY protocol (http://chromium.org/spdy)
-
+                |------ daemonize2      (for running nyssrad as a daemon)
