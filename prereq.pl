@@ -94,6 +94,8 @@ sub check_mod_prereq
         }
     }
 
+    `rm test.js`;
+
     return 1;
 }
 
