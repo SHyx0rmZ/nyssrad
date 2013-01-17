@@ -19,8 +19,24 @@
  * FROM,  OUT OF  OR IN CONNECTION  WITH THE  SOFTWARE  OR THE  USE OR  OTHER *
  * DEALINGS IN THE SOFTWARE.                                                  *
  ******************************************************************************/
+var data = require('./data');
+var config = require('./config');
+var VERSION = "0.1.0";
 
 process.on('uncaughtException', function (error) {
     console.error(error.stack);
 });
 
+
+function exit(storename) {
+    if (storename === undefined) {
+        storename = config.store.stores.loaded;
+    }
+
+    data.flush(storename);
+    process.exit();
+}
+
+
+exports.VERSION = VERSION;
+exports.exit = exit;

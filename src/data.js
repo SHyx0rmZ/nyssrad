@@ -80,7 +80,8 @@ function load()
     try {
         var content = fs.readFileSync(filename, 'utf8');
         store.setStore(JSON.parse(content));
-        log.success('Successfully loaded');
+        config.store.stores.loaded = filename;
+        log.success('Successfully loaded ' + filename);
     } catch (e) {
         log.failure(e);
     }
