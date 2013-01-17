@@ -22,6 +22,7 @@ $MOD_PREREQ{'log'} = 'log';
 $MOD_PREREQ{'twill'} = 'twill';
 $MOD_PREREQ{'optimist'} = 'optimist';
 $MOD_PREREQ{'spdy'} = 'spdy';
+$MOD_PREREQ{'daemonize2'} = 'daemonize2';
 #------------------------STOP HERE-------------------------#
 
 if (!&check_prereq(\%PREREQ)) {
