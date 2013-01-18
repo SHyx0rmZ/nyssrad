@@ -33,7 +33,7 @@ var Value = function() {
 
     this.set = function(value, readonly) {
         this.value = value;
-        if (readonly) {
+        if (readonly == "true") {
             this.readonly = true;
         } else {
             this.readonly = false;
