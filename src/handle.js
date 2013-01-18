@@ -54,9 +54,13 @@ function get(param)
 function set(param)
 {
     var keyValue = param.split('/');
-    store.set(keyValue);
+    result = store.set(keyValue);
 
-    response.build("true");
+    if (result == true) {
+        response.build("true");
+    } else {
+        response.build("false");
+    }
 }
 
 
