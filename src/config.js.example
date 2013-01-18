@@ -82,5 +82,4 @@ var config = {
     }
 };
 
-exports.config = config;
-
+module.exports = exports.config = config;
