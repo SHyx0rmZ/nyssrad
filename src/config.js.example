@@ -19,7 +19,7 @@
  * FROM,  OUT OF  OR IN CONNECTION  WITH THE  SOFTWARE  OR THE  USE OR  OTHER *
  * DEALINGS IN THE SOFTWARE.                                                  *
  ******************************************************************************/
-var config = {
+module.exports = config = {
     /**
      * Server settings
      */
@@ -27,7 +27,8 @@ var config = {
         // Set the port where nyssrad should listen for connections.
         // Can also be set via the command line to spawn multiple instances
         // on different ports
-        'port': 8888
+        'port': 8888,
+        'protocol': 'http'
     },
 
     /**
@@ -43,7 +44,10 @@ var config = {
         'prompt': true,
 
         // Suppresses startup-messages and other information
-        'suppress_messages': false
+        'suppress_messages': false,
+
+        // Print debug messages
+        'debug':false
     },
 
     /**
@@ -53,7 +57,7 @@ var config = {
         // Set this to false to deactivate automatic flushing at shutdown
         'use_default': true,
 
-        // Does (whyever) a default file with the same time exist,
+        // Does (whyever) a default file with the same name exist,
         // allow it to overwrite (or not)
         'overwrite_default': true,
 
@@ -73,13 +77,17 @@ var config = {
         'stores': {
             // You can change the name of the default store, but this
             // is not recommended
-            'default': 'default.store'
+            'default': 'default.store',
             /**
              * For now, you can specify your store here:
              * 'store': 'mystore.store'
              **/
+
+            // This store identifiest the currently loaded store;
+            // You shall not set it here, it'll be set during
+            // runtime
+            'loaded': false
         }
     }
 };
 
-module.exports = exports.config = config;
