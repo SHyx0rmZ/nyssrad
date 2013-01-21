@@ -31,8 +31,7 @@ var config = require('./config');
 
 function start()
 {
-    function onRequest(request, resp)
-    {
+    function onRequest(request, resp) {
         var pathname = url.parse(request.url).pathname;
 
         response.set(resp);

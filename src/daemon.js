@@ -1,6 +1,5 @@
-<?php
 /******************************************************************************
- * Copyright (c) 2012 Alexander Kluth <derhartmut@niwohlos.org>               *
+ * Copyright (c) 2013 Alexander Kluth <derhartmut@niwohlos.org>               *
  *                                                                            *
  * Permission is hereby granted,  free of charge,  to any  person obtaining a *
  * copy of this software and associated documentation files (the "Software"), *
@@ -20,35 +19,28 @@
  * FROM,  OUT OF  OR IN CONNECTION  WITH THE  SOFTWARE  OR THE  USE OR  OTHER *
  * DEALINGS IN THE SOFTWARE.                                                  *
  ******************************************************************************/
-/**
- * This is _not_ the PHP API for nyssrad, it is a proxy to deal avoid the
- * SameOrigin policy when accessing nyssrad via AJAX.
- **/
+var env = require('./env');
+var daemon = require('daemonize2').setup({
+    main: 'trampoline.js',
+    name: 'nyssrad',
+    pidfile: 'nyssrad.pid'
+});
 
-header('text/plain');
 
-$url = 'http://localhost:8888/';
+daemon.on('stopped', function() {
+    env.exit();
+});
 
-if ($_GET['cmd'] == "get") {
-    $url = $url . 'get/' . $_GET['key'];
 
-    $handle = fopen($url, "r");
-
-    if ($handle) {
-        while (!feof($handle)) {
-            $buffer = fgets($handle, 4096);
-            echo $buffer;
-        }
-
-        fclose($handle);
-    }
-} else if ($_GET['cmd'] == "set") {
-    $url = $url . 'set/' . $_GET['key'] . '/' . $_GET['value'];
-    $handle = fopen($url, "r");
-    fclose($handle);
-} else {
-    echo "nyssrad proxy";
+function start() {
+    daemon.start();
 }
 
 
-?>
+function stop() {
+    daemon.stop();
+}
+
+
+exports.start = start;
+exports.stop = stop;

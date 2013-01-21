@@ -26,17 +26,29 @@ var data = require('./data');
 var env = require('./env');
 var config = require('./config');
 var log = require('./log');
+var daemon = require('./daemon');
 var argv = require('optimist').argv;
 
-log.message("\nnyssrad 0.1 beta - noSQL key-value-database");
-log.glitzer("Copyright (C) 2012 Alexander Kluth <derhartmut@niwohlos.org>");
-log.message("Distributed under the terms of the MIT license\n");
 
-// Parse the command line
+var background = false;
+
+
+// --start = start the server in the background as a daemon
+if ((argv.start)) {
+    background = true;
+}
+
+if ((argv.stop)) {
+    daemon.stop();
+    env.exit();
+}
+
 if ((argv.store)) {
     log.warn('Loading store from file ' + argv.store + ', default store is not loaded!');
     data.setFilename(argv.store);
-} else if ((argv.port)) {
+}
+
+if ((argv.port)) {
     config.server.port = argv.port;
 }
 
@@ -45,9 +57,13 @@ if (config.store.flush.interval) {
 }
 
 data.load();
-server.start();
 
-if (config.env.prompt) {
+if (background) {
+    daemon.start();
+} else {
+    log.message("\nnyssrad " + env.VERSION + " - noSQL key-value-database");
+    log.glitzer("Copyright (C) 2012, 2013 Alexander Kluth <contact@alexanderkluth.com>");
+    log.message("Distributed under the terms of the MIT license\n");
     cmd.prompt();
 }
 
