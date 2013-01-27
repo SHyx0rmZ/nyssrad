@@ -1,6 +1,7 @@
 all:
 	@echo "Checking prerequisites..."
 	@perl prereq.pl
+	@npm install
 
 clean:
 	@rm -rf node_modules
