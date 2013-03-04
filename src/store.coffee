@@ -1,10 +1,10 @@
-hash = require 'hashish'
+Hash = require 'hashish'
 config = require './config'
 log = require './log'
 
 Value = ->
-    value = null
-    readonly = false
+    this.value = null
+    this.readonly = false
     this.set = (value, readonly) ->
         this.value = value
         if readonly == "true"
@@ -13,10 +13,10 @@ Value = ->
             this.readonly = false
 
     this.get = ->
-        value
+        this.value
 
     this.readOnly = ->
-        readonly
+        this.readonly
 
     return
 
@@ -45,14 +45,18 @@ set = (data) ->
             return_value = true
 
 get = (key) ->
+    values = []
+
     for k in key
-        if key[k] == '/'
+        if k == '/'
             continue
 
-        if Hash(Store).has key[k]
-            values.push Store[key[k]].get()
+        if Hash(Store).has k
+            values.push Store[k].get()
         else
             values.push false
+
+    return values
 
 getStore = ->
     Store
