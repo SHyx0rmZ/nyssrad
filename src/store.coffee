@@ -7,7 +7,7 @@ Value = ->
     this.readonly = false
     this.set = (value, readonly) ->
         this.value = value
-        if readonly == "true"
+        if readonly.toString() == "true"
             this.readonly = true
         else
             this.readonly = false
@@ -62,7 +62,7 @@ getStore = ->
     Store
 
 setStore = (store) ->
-    for key in store
+    for key of store
         Store[key] = new Value()
         Store[key].set store[key].value, store[key].readonly
 
