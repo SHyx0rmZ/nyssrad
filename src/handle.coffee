@@ -34,7 +34,6 @@ handle["/set"] = set
 handle["/getstore"] = getStore
 handle["/export"] = exportStore
 
-getHandles = ->
-    handle
-
-exports.getHandles = getHandles
+module.exports =
+    getHandles: ->
+        handle

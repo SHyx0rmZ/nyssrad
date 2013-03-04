@@ -13,10 +13,11 @@ commands =
     quit: utils.exit
     flush: data.flush
 
-prompt = ->
-    cmd.prompt '> ', (promptdata) ->
-        parse promptdata
-        prompt()
+module.exports =
+    prompt: ->
+        cmd.prompt '> ', (promptdata) ->
+            parse promptdata
+            module.exports.prompt()
 
 parse = (data) ->
     tokens = data.split ' '
@@ -30,5 +31,3 @@ parse = (data) ->
             log.failure "false"
     else
         log.message "unknown command " + tokens[0]
-
-exports.prompt = prompt

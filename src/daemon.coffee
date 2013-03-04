@@ -7,11 +7,9 @@ daemon = require('daemonize2').setup
 daemon.on 'stopped', ->
     env.exit()
 
-start = ->
-    daemon.start()
+module.exports =
+    start: ->
+        daemon.start()
 
-stop = ->
-    daemon.stop()
-
-exports.start = start
-exports.stop = stop
+    stop: ->
+        daemon.stop()
