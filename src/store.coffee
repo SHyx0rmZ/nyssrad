@@ -23,26 +23,26 @@ Value = ->
 Store = {}
 
 set = (data) ->
-        return false if data.length == 0
+    return false if data.length == 0
 
-        key = data[0]
-        value = data[1]
+    key = data[0]
+    value = data[1]
 
-        if data.length > 2
-            readonly = data[2]
+    if data.length > 2
+        readonly = data[2]
+    else
+        readonly = false
+
+    if Hash(Store).has key
+        if Store[key].readOnly()
+            return_value = false
         else
-            readonly = false
-
-        if Hash(Store).has key
-            if Store[key].readOnly()
-                return_value = false
-            else
-                Store[key].set value, readonly
-                return_value = true
-        else
-            Store[key] = new Value()
             Store[key].set value, readonly
             return_value = true
+    else
+        Store[key] = new Value()
+        Store[key].set value, readonly
+        return_value = true
 
 get = (key) ->
     values = []
