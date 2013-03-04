@@ -1,7 +1,7 @@
 {
   "name": "nyssrad",
   "description": "NoSQL key-value database",
-  "version": "0.0.1",
+  "version": "0.1.1",
   "repository": {
     "type":"git",
     "url": "git@github.com:deralex/nyssrad.git"
@@ -14,7 +14,8 @@
       "twill": "*",
       "optimist": "*",
       "spdy": "*",
-      "daemonize2": "*"
+      "daemonize2": "*",
+      "coffee-script": "*"
   },
   "scripts": {
     "start": "src/nyssrad"
