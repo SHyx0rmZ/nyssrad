@@ -1,69 +1,38 @@
-#!/usr/bin/env node
-/******************************************************************************
- * Copyright (c) 2012 Alexander Kluth <derhartmut@niwohlos.org>               *
- *                                                                            *
- * Permission is hereby granted,  free of charge,  to any  person obtaining a *
- * copy of this software and associated documentation files (the "Software"), *
- * to deal in the Software without restriction,  including without limitation *
- * the rights to use,  copy, modify, merge, publish,  distribute, sublicense, *
- * and/or sell copies  of the  Software,  and to permit  persons to whom  the *
- * Software is furnished to do so, subject to the following conditions:       *
- *                                                                            *
- * The above copyright notice and this permission notice shall be included in *
- * all copies or substantial portions of the Software.                        *
- *                                                                            *
- * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR *
- * IMPLIED, INCLUDING  BUT NOT  LIMITED TO THE WARRANTIES OF MERCHANTABILITY, *
- * FITNESS FOR A PARTICULAR  PURPOSE AND  NONINFRINGEMENT.  IN NO EVENT SHALL *
- * THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER *
- * LIABILITY,  WHETHER IN AN ACTION OF CONTRACT,  TORT OR OTHERWISE,  ARISING *
- * FROM,  OUT OF  OR IN CONNECTION  WITH THE  SOFTWARE  OR THE  USE OR  OTHER *
- * DEALINGS IN THE SOFTWARE.                                                  *
- ******************************************************************************/
-var cmd = require('./prompt');
-var server = require('./server');
-var data = require('./data');
-var env = require('./env');
-var config = require('./config');
-var log = require('./log');
-var daemon = require('./daemon');
-var argv = require('optimist').argv;
+#!/usr/bin/env coffee
+cmd = require './prompt'
+server = require './server'
+data = require './data'
+env = require './env'
+config = require './config'
+log = require './log'
+daemon = require './daemon'
+argv = require('optimist').argv
 
+background = false
 
-var background = false;
+if argv.start
+    background = true
 
+if argv.stop
+    daemon.stop()
+    env.exit()
 
-// --start = start the server in the background as a daemon
-if ((argv.start)) {
-    background = true;
-}
+if argv.store
+    log.warn 'Loading store form file ' + argv.store + ', default store is not loaded!'
+    data.setFilename argv.store
 
-if ((argv.stop)) {
-    daemon.stop();
-    env.exit();
-}
+if argv.port
+    config.server.port = argv.port
 
-if ((argv.store)) {
-    log.warn('Loading store from file ' + argv.store + ', default store is not loaded!');
-    data.setFilename(argv.store);
-}
+if config.store.flush.interval
+    data.registerFlushing()
 
-if ((argv.port)) {
-    config.server.port = argv.port;
-}
+data.load()
 
-if (config.store.flush.interval) {
-    data.registerFlushing();
-}
-
-data.load();
-
-if (background) {
-    daemon.start();
-} else {
-    log.message("\nnyssrad " + env.VERSION + " - noSQL key-value-database");
-    log.glitzer("Copyright (C) 2012, 2013 Alexander Kluth <contact@alexanderkluth.com>");
-    log.message("Distributed under the terms of the MIT license\n");
-    cmd.prompt();
-}
-
+if background
+    daemon.start()
+else
+    log.message "\nnyssrad " + env.VERSION + " - noSQL key-value-database"
+    log.glitzer "Copyright (C) 2012, 2013 Alexander Kluth <contact@alexanderkluth.com>, Patrick Pokatilo <mail@shyxormz.net>"
+    log.message "Distributed under the terms of the MIT license\n"
+    cmd.prompt()
