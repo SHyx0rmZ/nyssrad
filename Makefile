@@ -1,6 +1,9 @@
 all:
 	@echo "Checking prerequisites..."
 	@perl prereq.pl
+	@npm install
+	@coffee -c src/config.litcoffee
+
 clean:
 	@rm -rf node_modules
 

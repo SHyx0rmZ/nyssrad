@@ -1,6 +1,7 @@
 *.swp
 *.store
-node_modules/ 
+node_modules/
+node_modules
 test/
 src/config.js
 template.sh
