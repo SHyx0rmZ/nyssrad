@@ -3,18 +3,21 @@ config = require "./config"
 store = require "./store"
 log = require "./log"
 
+name = (storename = []) ->
+    if storename.length > 0
+        storename[0].toString()
+    else if thisStore?
+        thisStore
+    else if config.store.use_default
+        config.store.stores.default
+    else
+        false
+
 module.exports =
     flush: (storename) ->
-        filename = ""
+        filename = name storename
 
-        if  storename.length > 0
-            filename = storename[0].toString()
-        else if thisStore?
-            filename = thisStore
-        else if config.store.use_default
-            filename = config.store.stores.default
-        else
-            return false
+        return false unless filename
 
         content = store.getJSONfiedStore()
 
@@ -28,13 +31,9 @@ module.exports =
             false
 
     load: ->
-        filename = ""
+        filename = name()
 
-        if thisStore?
-            filename = thisStore
-        else if config.store.use_default
-            filename = config.store.stores.default
-        else
+        unless filename
             log.debug 'Nothing to load'
             return
 
