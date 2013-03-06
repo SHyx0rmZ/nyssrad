@@ -1,16 +1,15 @@
 data = require './data'
 config = require './config'
-VERSION = '0.1.1'
 
 process.on 'uncaughtException', (error) ->
     console.error error.stack
 
-exit = (storename) ->
-    unless storename?
-        storename = config.store.stores.loaded
+module.exports =
+    VERSION: '0.1.1'
 
-    data.flush storename
-    process.exit()
+    exit: (storename) ->
+        unless storename?
+            storename = config.store.stores.loaded
 
-exports.VERSION = VERSION
-exports.exit = exit
+        data.flush storename
+        process.exit()

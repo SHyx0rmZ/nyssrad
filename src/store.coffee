@@ -22,56 +22,47 @@ Value = ->
 
 Store = {}
 
-set = (data) ->
-    return false if data.length == 0
+module.exports =
+    set: (data) ->
+        return false if data.length == 0
 
-    key = data[0]
-    value = data[1]
+        key = data[0]
+        value = data[1]
 
-    if data.length > 2
-        readonly = data[2]
-    else
-        readonly = false
-
-    if Hash(Store).has key
-        if Store[key].readOnly()
-            return_value = false
+        if data.length > 2
+            readonly = data[2]
         else
-            Store[key].set value, readonly
-            return_value = true
-    else
-        Store[key] = new Value()
+            readonly = false
+
+        Store[key] = new Value() unless Hash(Store).has key
+
+        return false if Store[key].readOnly()
+
         Store[key].set value, readonly
-        return_value = true
 
-get = (key) ->
-    values = []
+        true
 
-    for k in key
-        if k == '/'
-            continue
+    get: (key) ->
+        values = []
 
-        if Hash(Store).has k
-            values.push Store[k].get()
-        else
-            values.push false
+        for k in key
+            if k == '/'
+                continue
 
-    return values
+            if Hash(Store).has k
+                values.push Store[k].get()
+            else
+                values.push false
 
-getStore = ->
-    Store
+        return values
 
-setStore = (store) ->
-    for key of store
-        Store[key] = new Value()
-        Store[key].set store[key].value, store[key].readonly
+    getStore: ->
+        Store
 
-getJSONfiedStore = ->
-    JSON.stringify Store
+    setStore: (store) ->
+        for key of store
+            Store[key] = new Value()
+            Store[key].set store[key].value, store[key].readonly
 
-exports.set = set
-exports.get = get
-exports.name
-exports.getStore = getStore
-exports.getJSONfiedStore = getJSONfiedStore
-exports.setStore = setStore
+    getJSONfiedStore: ->
+        JSON.stringify Store

@@ -70,4 +70,4 @@ it'll be set during runtime
 
                 loaded: false
 
-    module.exports = exports.config = config
+    module.exports = config

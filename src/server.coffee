@@ -7,24 +7,23 @@ response = require './response'
 log = require './log'
 config = require './config'
 
-start = ->
-    onRequest = (request, resp) ->
-        pathname = url.parse(request.url).pathname
+module.exports =
+    start: ->
+        onRequest = (request, resp) ->
+            pathname = url.parse(request.url).pathname
 
-        response.set resp
+            response.set resp
 
-        router.route pathname, handle.getHandles()
+            router.route pathname, handle.getHandles()
 
-        response.send()
+            response.send()
 
-    switch config.server.protocol
-        when 'http'
-            http.createServer(onRequest).listen config.server.port
-        when 'spdy'
-            spdy.createServer(onRequest).listen config.server.port
-        else
-            http.createServer(onRequest).listen config.server.port
+        switch config.server.protocol
+            when 'http'
+                http.createServer(onRequest).listen config.server.port
+            when 'spdy'
+                spdy.createServer(onRequest).listen config.server.port
+            else
+                http.createServer(onRequest).listen config.server.port
 
-    log.message "Stared at port " + config.server.port
-
-exports.start = start
+        log.message "Started at port " + config.server.port

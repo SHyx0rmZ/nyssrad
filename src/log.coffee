@@ -29,32 +29,25 @@ else
         error: 'grey'
         message: 'grey'
 
-success = (str) ->
-    console.log str.toString().success
+module.exports =
+    success: (str) ->
+        console.log str.toString().success
 
-failure = (str) ->
-    console.log str.toString().error
+    failure: (str) ->
+        console.log str.toString().error
 
-debug = (str) ->
-    if config.env.debug
-        console.log str.toString().debug
+    debug: (str) ->
+        if config.env.debug
+            console.log str.toString().debug
 
-warn = (str) ->
-    console.log str.toString().warn
+    warn: (str) ->
+        console.log str.toString().warn
 
-message = (str) ->
-    console.log str.toString().message
+    message: (str) ->
+        console.log str.toString().message
 
-data = (str) ->
-    console.log str.toString().data
+    data: (str) ->
+        console.log str.toString().data
 
-glitzer = (str) ->
-    console.log str.toString().glitzer
-
-exports.success = success
-exports.failure = failure
-exports.debug = debug
-exports.message = message
-exports.glitzer = glitzer
-exports.data = data
-exports.warn = warn
+    glitzer: (str) ->
+        console.log str.toString().glitzer
