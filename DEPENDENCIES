@@ -32,3 +32,4 @@ Requirements to run nyssrad:
                 |------ optimist        (for commandline parsing)
                 |------ spdy            (implementation of the SPDY protocol (http://chromium.org/spdy)
                 |------ daemonize2      (for running nyssrad as a daemon)
+                |------ coffee-script   (it's written in coffeescript, duh)
