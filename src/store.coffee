@@ -34,16 +34,13 @@ module.exports =
         else
             readonly = false
 
-        if Hash(Store).has key
-            if Store[key].readOnly()
-                return_value = false
-            else
-                Store[key].set value, readonly
-                return_value = true
-        else
-            Store[key] = new Value()
-            Store[key].set value, readonly
-            return_value = true
+        Store[key] = new Value() unless Hash(Store).has key
+
+        return false if Store[key].readOnly()
+
+        Store[key].set value, readonly
+
+        true
 
     get: (key) ->
         values = []
