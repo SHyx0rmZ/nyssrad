@@ -1,6 +1,6 @@
 env = require './env'
 daemon = require('daemonize2').setup
-    main: 'trampoline.coffee'
+    main: 'trampoline.js'
     name: 'nyssrad'
     pidfile: 'nyssrad.pid'
 
