@@ -3,6 +3,7 @@ all:
 	@perl prereq.pl
 	@npm install
 	@coffee -c src/config.litcoffee
+	@coffee -c src/*.coffee
 
 clean:
 	@rm -rf node_modules
