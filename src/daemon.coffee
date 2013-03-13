@@ -3,9 +3,6 @@ daemon = require('daemonize2').setup
     name: 'nyssrad'
     pidfile: 'nyssrad.pid'
 
-daemon.on 'stopped', ->
-    env.exit()
-
 module.exports =
     start: ->
         process.argv.push '--server'

@@ -6,6 +6,10 @@ handle = require './handle'
 response = require './response'
 log = require './log'
 config = require './config'
+env = require './env'
+
+process.on 'exit', ->
+    env.exit()
 
 module.exports =
     start: ->
