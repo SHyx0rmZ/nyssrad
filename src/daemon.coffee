@@ -1,6 +1,5 @@
-env = require './env'
 daemon = require('daemonize2').setup
-    main: 'trampoline.js'
+    main: 'nyssrad.js'
     name: 'nyssrad'
     pidfile: 'nyssrad.pid'
 
@@ -9,7 +8,10 @@ daemon.on 'stopped', ->
 
 module.exports =
     start: ->
-        daemon.start()
+        process.argv.push '--server'
+        daemon.start().once 'started', ->
+            process.exit()
 
     stop: ->
-        daemon.stop()
+        daemon.stop().once 'stopped', ->
+            process.exit()
